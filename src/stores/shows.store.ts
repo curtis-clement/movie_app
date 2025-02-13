@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
-import showsApi from '@/api/shows.api';
+import showsApi from '@/api/modules/shows.api';
 
 interface State {
   shows: [];
@@ -15,7 +15,7 @@ export const useShowsStore = defineStore('shows', {
     ...initialState,
   }),
   actions: {
-    async fetchAllShows() {
+    async fetchAllShows(): Promise<void> {
       const pagesToFetch = 5;
       
       for (let currentPage = 0; currentPage < pagesToFetch; currentPage++) {

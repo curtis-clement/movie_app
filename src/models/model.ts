@@ -88,4 +88,4 @@ interface CastMember {
   voice: boolean;
 }
 
-export type { Show, Season, Episode, CastMember };
+export type { CastMember, Episode, Season, Show };

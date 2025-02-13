@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import searchApi from '@/api/search.api';
-import showsApi from '@/api/shows.api';
+import searchApi from '@/api/modules/search.api';
+import showsApi from '@/api/modules/shows.api';
 import { useShowsStore } from '@/stores/shows.store';
 
 async function searchShows() {
