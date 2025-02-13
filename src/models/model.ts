@@ -1,11 +1,17 @@
-type Network = {
+interface Rating {
+  average: number;
+}
+
+interface Country {
+  code: string;
+  name: string;
+  timezone: string;
+}
+
+interface Network {
+  country: Country;
   id: number;
   name: string;
-  country: {
-    code: string;
-    name: string;
-    timezone: string;
-  };
 }
 
 interface Image {
@@ -22,13 +28,11 @@ interface Show {
   name: string;
   network: Network;
   premiered: string;
-  rating: {
-    average: number;
-  };
+  rating: Rating;
   runtime: number;
   schedule: {
-    time: string;
     days: string[];
+    time: string;
   };
   status: string;
   summary: string;
@@ -36,19 +40,52 @@ interface Show {
 }
 
 interface Season {
+  endDate: string;
+  episodeOrder: number;
   id: number;
-  url: string,
-  number: number,
-  episodeOrder: number,
-  premiereDate: string,
-  endDate: string,
-  network: Network,
-  image: Image,
-  summary: string | null,
+  image: Image;
+  network: Network;
+  number: number;
+  premiereDate: string;
+  summary: string | null;
+  url: string;
 }
 
 interface Episode {
-
+  airdate: string;
+  airstamp: string;
+  airtime: string;
+  id: number;
+  image: Image;
+  name: string;
+  number: number;
+  rating: Rating;
+  runtime: number;
+  season: number;
+  summary: string | null;
+  type: string;
+  url: string;
 }
 
-export type { Show, Season };
+interface CastMember {
+  character: {
+    id: number;
+    image: Image;
+    name: string;
+    url: string;
+  };
+  person: {
+    birthday: string;
+    country: Country;
+    deathday: string | null;
+    gender: string;
+    id: number;
+    image: Image;
+    name: string;
+    url: string;
+  };
+  self: boolean;
+  voice: boolean;
+}
+
+export type { Show, Season, Episode, CastMember };

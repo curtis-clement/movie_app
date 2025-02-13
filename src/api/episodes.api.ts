@@ -13,6 +13,10 @@ const episodesApi = {
     const response = await api.get(`/seasons/${seasonId}/episodes`);
     return response.data;
   },
+  getEpisodeById: async (episodeId: number) => {
+    const response = await api.get(`/episodes/${episodeId}`);
+    return response.data;
+  },
 }
 
 export default episodesApi;
