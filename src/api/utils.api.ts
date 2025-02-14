@@ -35,7 +35,7 @@ class PathBuilder {
     return this;
   }
 
-  public addPath(path: string): this {
+  public addPath(path: string | number): this {
     return this.addString(path);
   }
 

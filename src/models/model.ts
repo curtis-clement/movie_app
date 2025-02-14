@@ -39,6 +39,23 @@ interface Show {
   url: string;
 }
 
+interface ShowTableData {
+  genres: string[];
+  id: number;
+  name: string;
+  network: Network;
+  rating: Rating;
+  status: string;
+}
+
+enum ShowTableHeaders {
+  NAME = 'Name',
+  NETWORK = 'Network',
+  RATING = 'Rating',
+  STATUS = 'Status',
+  COUNTRY = 'Country',
+}
+
 interface Season {
   endDate: string;
   episodeOrder: number;
@@ -88,4 +105,5 @@ interface CastMember {
   voice: boolean;
 }
 
-export type { CastMember, Episode, Season, Show };
+export type { CastMember, Episode, Season, Show, ShowTableData };
+export { ShowTableHeaders };

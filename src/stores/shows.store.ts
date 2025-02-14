@@ -1,9 +1,10 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
 import showsApi from '@/api/modules/shows.api';
+import type { ShowTableData } from '@/models/model';
 
 interface State {
-  shows: [];
+  shows: ShowTableData[];
 }
 
 const initialState: State = {
@@ -20,7 +21,7 @@ export const useShowsStore = defineStore('shows', {
       
       for (let currentPage = 0; currentPage < pagesToFetch; currentPage++) {
         try {
-          const fetchedShows = await showsApi.getAllShows(currentPage);
+          const fetchedShows = await showsApi.getShowsByPageNumber(currentPage);
           if (fetchedShows && fetchedShows.length > 0) {
             this.shows.push(...fetchedShows);
           } else {
@@ -36,6 +37,18 @@ export const useShowsStore = defineStore('shows', {
           }
         }
       }
+    },
+  },
+  getters: {
+    showTableData: (state) => {
+      return state.shows.slice(0, 1000).map((show) => ({
+        genres: show.genres,
+        id: show.id,
+        name: show.name,
+        rating: show.rating,
+        status: show.status,
+        network: show.network,
+      }));
     },
   },
 });

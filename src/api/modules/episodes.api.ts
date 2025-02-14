@@ -1,21 +1,16 @@
 import api from '@/api/main.api';
+import PathBuilder from '@/api/utils.api';
+import { Paths } from '@/api/paths.api';
+import type { Episode } from '@/models/model';
 
 const episodesApi = {
-  getEpisodeListByShowId: async (showId: number) => {
-    const response = await api.get(`/shows/${showId}/episodes`);
-    return response.data;
+  getEpisodeListBySeasonId: async (seasonId: number): Promise<Episode[]> => {
+    const path = new PathBuilder().addPath(Paths.seasons).addPath(seasonId).addPath(Paths.episodes);
+    return (await api.get(path.build())).data;
   },
-  getSeasonsByShowId: async (showId: number) => {
-    const response = await api.get(`/shows/${showId}/seasons`);
-    return response.data;
-  },
-  getEpisodeListBySeasonId: async (seasonId: number) => {
-    const response = await api.get(`/seasons/${seasonId}/episodes`);
-    return response.data;
-  },
-  getEpisodeById: async (episodeId: number) => {
-    const response = await api.get(`/episodes/${episodeId}`);
-    return response.data;
+  getEpisodeById: async (episodeId: number): Promise<Episode> => {
+    const path = new PathBuilder().addPath(Paths.episodes).addPath(episodeId);
+    return (await api.get(path.build())).data;
   },
 }
 

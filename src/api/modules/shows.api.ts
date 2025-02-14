@@ -1,14 +1,30 @@
 import api from '@/api/main.api';
+import PathBuilder from '@/api/utils.api';
+import { Paths } from '@/api/paths.api';
+import type { Show } from '@/models/model';
+
+const showPath = () => new PathBuilder().addPath(Paths.shows);
 
 const showsApi = {
-  getAllShows: async (pageNumber: number) => {
+  getShowsByPageNumber: async (pageNumber: number) => {
     const response = await api.get(`/shows?page=${pageNumber}`);
     return response.data;
   },
   getShowById: async (showId: number) => {
-    const response = await api.get(`/shows/${showId}`);
-    console.log('RESPONSE', response.data);
-    return response.data;
+    const path = showPath().addPath(showId);
+    return (await api.get(path.build())).data;
+  },
+  getEpisodeListByShowId: async (showId: number) => {
+    const path = showPath().addPath(showId.toString()).addPath(Paths.episodes);
+    return (await api.get(path.build())).data;
+  },
+  getSeasonsByShowId: async (showId: number) => {
+    const path = showPath().addPath(showId).addPath(Paths.seasons);
+    return (await api.get(path.build())).data;
+  },
+  searchShows: async (query: string): Promise<Show[]> => {
+    const path = showPath().addPath(Paths.search).addQuery('q', query).build();
+    return (await api.get(path)).data;
   },
 }
 
