@@ -1,14 +1,16 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
 import showsApi from '@/api/modules/shows.api';
-import type { ShowTableData } from '@/models/model';
+import type { ShowTableData, Show } from '@/models/model';
 
 interface State {
   shows: ShowTableData[];
+  selectedShow: Show | null;
 }
 
 const initialState: State = {
   shows: [],
+  selectedShow: null,
 }
 
 export const useShowsStore = defineStore('shows', {
@@ -37,6 +39,10 @@ export const useShowsStore = defineStore('shows', {
           }
         }
       }
+    },
+    async fetchShowById(showId: number): Promise<void> {
+      const show = await showsApi.getShowById(showId);
+      this.selectedShow = show;
     },
   },
   getters: {
