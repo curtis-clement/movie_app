@@ -1,13 +1,21 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useShowsStore } from '@/stores/shows.store';
 
+const route = useRoute();
 const router = useRouter();
 const showsStore = useShowsStore();
 
 function navigateToHome() {
   router.push('/');
 }
+
+onMounted(() => {
+  if (!showsStore.selectedShow) {
+    showsStore.fetchShowById(Number(route.params.id));
+  }
+});
 </script>
 
 <template>
