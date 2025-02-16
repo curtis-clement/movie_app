@@ -33,12 +33,13 @@ function searchShows() {
 <template>
   <div class="shows-page">
     <header class="header">
-      <button class="action-button" @click="navigateToHome">Back to Home</button>
       <SearchInput
+        placeholder="Search shows"
         :model-value="searchQuery"
         @update:model-value="updateSearchQuery"
       />
       <button class="action-button" @click="searchShows">Search</button>
+      <button class="action-button" @click="navigateToHome">Back to Home</button>
     </header>
 
     <section class="shows-grid">

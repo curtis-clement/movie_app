@@ -1,7 +1,12 @@
 <script setup lang="ts">
-const props = defineProps<{
+
+const props = withDefaults(defineProps<{
+  disabled?: boolean;
+  placeholder: string;
   modelValue: string;
-}>();
+}>(), {
+  disabled: false,
+});
 
 const emit = defineEmits(['update:modelValue']);
 
@@ -10,8 +15,9 @@ const emit = defineEmits(['update:modelValue']);
 <template>
   <input 
     type="text" 
-    placeholder="Search" 
+    :placeholder="props.placeholder" 
     :value="props.modelValue" 
+    :disabled="props.disabled"
     @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)" 
   />
 </template>
@@ -24,6 +30,12 @@ input {
   width: 10rem;
   min-width: 150px;
   margin-left: 1rem;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
+}
+
+input:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 </style>
