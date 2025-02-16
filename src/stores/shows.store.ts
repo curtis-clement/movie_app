@@ -25,7 +25,7 @@ export const useShowsStore = defineStore('shows', {
         try {
           const fetchedShows = await api.getShowsByPageNumber(currentPage);
           if (fetchedShows && fetchedShows.length > 0) {
-            console.log('fetchedShows', fetchedShows);
+            
             const shows = fetchedShows.map((show: Show) => ({
               genres: show.genres,
               id: show.id,
@@ -58,10 +58,22 @@ export const useShowsStore = defineStore('shows', {
     async searchShows(searchQuery: string): Promise<void> {
       const shows = await api.getShowsBySearchQuery(searchQuery);
       console.log('shows', shows);
+      const updatedShows = shows.map((item: { score: number, show: Show }) => ({
+        genres: item.show.genres ? item.show.genres : [],
+        id: item.show.id,
+        image: item.show.image,
+        name: item.show.name,
+        rating: item.show.rating && item.show.rating.average ? item.show.rating.average : 0,
+        status: item.show.status,
+        network: item.show.network,
+      }));
+      console.log('updatedShows', updatedShows);
+      this.shows = updatedShows;
     },
   },
   getters: {
     allCurrentShows: (state) => {
+      console.log('state.shows', state.shows);
       return state.shows;
     },
   },

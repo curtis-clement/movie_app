@@ -23,9 +23,8 @@ const showsApi = {
     const path = showPath().addPath(showId).addPath(Paths.seasons);
     return (await api.get(path.build())).data;
   },
-  getShowsBySearchQuery: async (query: string): Promise<Show[]> => {
+  getShowsBySearchQuery: async (query: string): Promise<{ score: number, show: Show }[]> => {
     const path = searchPath().addQuery('q', query).build();
-    console.log('path', path);
     return (await api.get(path)).data;
   },
 }
