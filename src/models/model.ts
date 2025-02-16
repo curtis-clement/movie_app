@@ -57,6 +57,11 @@ enum ShowInfoCardHeaders {
   COUNTRY = 'Country',
 }
 
+enum RatingFilterOption {
+  HIGHEST = 'Highest',
+  LOWEST = 'Lowest',
+}
+
 interface Season {
   endDate: string;
   episodeOrder: number;
@@ -107,4 +112,4 @@ interface CastMember {
 }
 
 export type { CastMember, Episode, Season, Show, ShowInfoCardData };
-export { ShowInfoCardHeaders };
+export { ShowInfoCardHeaders, RatingFilterOption };

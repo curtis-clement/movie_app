@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import SearchInput from '@/components/SearchInput.vue';
 import ShowInfoCard from '@/components/ShowInfoCard.vue';
+// import TextChip from '@/components/TextChip.vue';
+import FilterPanel from '@/components/FilterPanel.vue';
 import { useShowsStore } from '@/stores/shows.store';
 import { useRouter } from 'vue-router';
+import { computed, ref } from 'vue';
+import { RatingFilterOption } from '@/models/model';
 
 const showsStore = useShowsStore();
 const router = useRouter();
@@ -25,6 +29,48 @@ function searchShows() {
   showsStore.searchShows();
 }
 
+const selectedFilterName = ref('');
+
+const filters = computed(() => {
+  const filters = [
+    {
+      filterName: 'Genres',
+      options: showsStore.allGeneresForCurrentShows,
+      selectedOptions: showsStore.selectedFilterByGenre,
+    },
+    {
+      filterName: 'Status',
+      options: ['Running', 'Ended', 'To Be Determined'],
+      selectedOptions: showsStore.selectedFilterByStatus,
+    },
+    {
+      filterName: 'Rating',
+      options: [RatingFilterOption.HIGHEST, RatingFilterOption.LOWEST],
+      selectedOptions: [showsStore.selectedFilterByRating],
+    }
+  ];
+  console.log('FILTERS', filters);
+  return filters;
+});
+
+function toggleFilter(filterName: string) {
+  if (selectedFilterName.value === filterName) {
+    selectedFilterName.value = '';
+  } else {
+    selectedFilterName.value = filterName;
+  }
+}
+
+function handleChipClick(filterName: string, option: string) {
+  if (filterName === 'Genres') {
+    console.log('GENRE', option);
+    showsStore.setSelectedFilterByGenre(option);
+  } else if (filterName === 'Status') {
+    showsStore.setSelectedFilterByStatus(option);
+  } else if (filterName === 'Rating') {
+    showsStore.setSelectedFilterByRating(option as RatingFilterOption);
+  }
+}
 </script>
 
 <template>
@@ -38,6 +84,21 @@ function searchShows() {
       <button class="action-button" @click="searchShows">Search</button>
       <button class="action-button" @click="navigateToHome">Back to Home</button>
     </header>
+
+    <section class="genres-grid">
+      <FilterPanel
+        :filters="filters"
+        :selected-filter-name="selectedFilterName"
+        @toggle-filter="toggleFilter"
+        @chip-click="handleChipClick"
+      />
+      <!-- <TextChip
+        v-for="genre in showsStore.allGeneresForCurrentShows"
+        :key="genre"
+        :text="genre"
+        
+      /> -->
+    </section>
 
     <section class="shows-grid">
       <ShowInfoCard

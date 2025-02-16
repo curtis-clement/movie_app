@@ -1,18 +1,49 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
 import api from '@/api';
-import type { ShowInfoCardData, Show } from '@/models/model';
+import { type ShowInfoCardData, type Show, RatingFilterOption } from '@/models/model';
 
 interface State {
   searchQuery: string;
   shows: ShowInfoCardData[];
   selectedShow: Show | null;
+  selectedFilterByGenre: string[];
+  selectedFilterByStatus: string[];
+  selectedFilterByRating: RatingFilterOption | '';
 }
 
 const initialState: State = {
   searchQuery: '',
   shows: [],
   selectedShow: null,
+  selectedFilterByGenre: [],
+  selectedFilterByStatus: [],
+  selectedFilterByRating: '',
+}
+
+function filterByGenre(shows: ShowInfoCardData[], genres: string[]): ShowInfoCardData[] {
+  if (genres.length === 0) {
+    return shows;
+  }
+  return shows.filter((show) => show.genres.some((genre) => genres.includes(genre)));
+}
+
+function filterByStatus(shows: ShowInfoCardData[], statuses: string[]): ShowInfoCardData[] {
+  if (statuses.length === 0) {
+    return shows;
+  }
+  return shows.filter((show) => statuses.includes(show.status));
+}
+
+function filterByRating(shows: ShowInfoCardData[], ratingOption: RatingFilterOption | ''): ShowInfoCardData[] {
+  if (ratingOption === '') {
+    return shows;
+  }
+  if (ratingOption === RatingFilterOption.HIGHEST) {
+    return shows.sort((a, b) => b.rating - a.rating);
+  } else {
+    return shows.sort((a, b) => a.rating - b.rating);
+  }
 }
 
 export const useShowsStore = defineStore('shows', {
@@ -75,11 +106,48 @@ export const useShowsStore = defineStore('shows', {
 
       this.shows = updatedShows;
     },
+    setSelectedFilterByGenre(genre: string): void {
+      if (this.selectedFilterByGenre.includes(genre)) {
+        this.selectedFilterByGenre = this.selectedFilterByGenre.filter((g) => g !== genre);
+      } else {
+        this.selectedFilterByGenre.push(genre);
+      }
+    },
+    clearSelectedFilterByGenre(): void {
+      this.selectedFilterByGenre = [];
+    },
+    setSelectedFilterByStatus(status: string): void {
+      if (this.selectedFilterByStatus.includes(status)) {
+        this.selectedFilterByStatus = this.selectedFilterByStatus.filter((s) => s !== status);
+      } else {
+        this.selectedFilterByStatus.push(status);
+      }
+    },
+    clearSelectedFilterByStatus(): void {
+      this.selectedFilterByStatus = [];
+    },
+    setSelectedFilterByRating(rating: RatingFilterOption): void {
+      this.selectedFilterByRating = rating;
+    },
+    clearSelectedFilterByRating(): void {
+      this.selectedFilterByRating = '';
+    },
+    clearAllFilters(): void {
+      this.clearSelectedFilterByGenre();
+      this.clearSelectedFilterByStatus();
+      this.clearSelectedFilterByRating();
+    },
   },
   getters: {
     allCurrentShows: (state) => {
-      console.log('state.shows', state.shows);
-      return state.shows;
+      const showsByGenre = filterByGenre(state.shows, state.selectedFilterByGenre);
+      const showsByStatus = filterByStatus(showsByGenre, state.selectedFilterByStatus);
+      const showsByRating = filterByRating(showsByStatus, state.selectedFilterByRating);
+      return showsByRating;
+    },
+    allGeneresForCurrentShows: (state) => {
+      const genres = new Set(state.shows.map((show) => show.genres).flat().sort());
+      return Array.from(genres);
     },
   },
 });
