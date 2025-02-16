@@ -16,7 +16,7 @@ const router = createRouter({
       component: ShowsPage,
     },
     {
-      path: Routes.SHOW_OVERVIEW,
+      path: `${Routes.SHOW_OVERVIEW}/:id`,
       component: ShowOverview,
     },
   ],
