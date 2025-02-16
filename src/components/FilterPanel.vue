@@ -42,6 +42,7 @@ function isOptionSelected(filterName: string, option: string) {
           ▼
         </span>
       </div>
+
     </div>
 
     <div v-if="props.selectedFilterName" class="filter-chips">
@@ -50,7 +51,7 @@ function isOptionSelected(filterName: string, option: string) {
         :key="option"
         :text="option"
         :selected="isOptionSelected(props.selectedFilterName, option)"
-        @click="handleChipClick(props.selectedFilterName, option)"
+        @emit-click="handleChipClick(props.selectedFilterName, option)"
       />
     </div>
   </div>
@@ -70,12 +71,12 @@ function isOptionSelected(filterName: string, option: string) {
 }
 
 .filter-header {
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  display: flex;
   align-items: center;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
   gap: 0.5rem;
+  padding: 0.5rem 1rem;
 }
 
 .filter-header:hover {
@@ -83,8 +84,8 @@ function isOptionSelected(filterName: string, option: string) {
 }
 
 .arrow {
-  font-size: .75rem;
   display: inline-block;
+  font-size: .75rem;
   transform: rotate(-90deg);
   transition: transform 0.2s ease;
 }
@@ -95,7 +96,7 @@ function isOptionSelected(filterName: string, option: string) {
 
 .filter-chips {
   display: flex;
-  gap: 0.5rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
 </style>

@@ -6,19 +6,20 @@ import FilterPanel from '@/components/FilterPanel.vue';
 import { useShowsStore } from '@/stores/shows.store';
 import { useRouter } from 'vue-router';
 import { computed, ref } from 'vue';
-import { RatingFilterOption } from '@/models/model';
+import { FilterCategories, RatingFilterOption, ShowStatusFilterOption } from '@/models/filter.model';
+import { Routes } from '@/models/routes.model';
 
 const showsStore = useShowsStore();
 const router = useRouter();
 
 
 function navigateToHome() {
-  router.push('/');
+  router.push(Routes.HOME);
 }
 
 async function navigateToShow(showId: number) {
   await showsStore.fetchShowById(showId);
-  router.push(`/show-overview/${showId}`);
+  router.push(`${Routes.SHOW_OVERVIEW}/${showId}`);
 }
 
 function updateSearchQuery(query: string) {
@@ -34,22 +35,21 @@ const selectedFilterName = ref('');
 const filters = computed(() => {
   const filters = [
     {
-      filterName: 'Genres',
+      filterName: FilterCategories.GENRE,
       options: showsStore.allGeneresForCurrentShows,
       selectedOptions: showsStore.selectedFilterByGenre,
     },
     {
-      filterName: 'Status',
-      options: ['Running', 'Ended', 'To Be Determined'],
+      filterName: FilterCategories.STATUS,
+      options: [ShowStatusFilterOption.RUNNING, ShowStatusFilterOption.ENDED, ShowStatusFilterOption.TO_BE_DETERMINED],
       selectedOptions: showsStore.selectedFilterByStatus,
     },
     {
-      filterName: 'Rating',
+      filterName: FilterCategories.RATING,
       options: [RatingFilterOption.HIGHEST, RatingFilterOption.LOWEST],
       selectedOptions: [showsStore.selectedFilterByRating],
     }
   ];
-  console.log('FILTERS', filters);
   return filters;
 });
 
@@ -62,12 +62,11 @@ function toggleFilter(filterName: string) {
 }
 
 function handleChipClick(filterName: string, option: string) {
-  if (filterName === 'Genres') {
-    console.log('GENRE', option);
+  if (filterName === FilterCategories.GENRE) {
     showsStore.setSelectedFilterByGenre(option);
-  } else if (filterName === 'Status') {
+  } else if (filterName === FilterCategories.STATUS) {
     showsStore.setSelectedFilterByStatus(option);
-  } else if (filterName === 'Rating') {
+  } else if (filterName === FilterCategories.RATING) {
     showsStore.setSelectedFilterByRating(option as RatingFilterOption);
   }
 }
@@ -85,19 +84,13 @@ function handleChipClick(filterName: string, option: string) {
       <button class="action-button" @click="navigateToHome">Back to Home</button>
     </header>
 
-    <section class="genres-grid">
+    <section class="filters-panel">
       <FilterPanel
         :filters="filters"
         :selected-filter-name="selectedFilterName"
         @toggle-filter="toggleFilter"
         @chip-click="handleChipClick"
       />
-      <!-- <TextChip
-        v-for="genre in showsStore.allGeneresForCurrentShows"
-        :key="genre"
-        :text="genre"
-        
-      /> -->
     </section>
 
     <section class="shows-grid">
