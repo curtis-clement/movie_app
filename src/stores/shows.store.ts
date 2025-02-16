@@ -4,11 +4,13 @@ import api from '@/api';
 import type { ShowInfoCardData, Show } from '@/models/model';
 
 interface State {
+  searchQuery: string;
   shows: ShowInfoCardData[];
   selectedShow: Show | null;
 }
 
 const initialState: State = {
+  searchQuery: '',
   shows: [],
   selectedShow: null,
 }
@@ -55,9 +57,12 @@ export const useShowsStore = defineStore('shows', {
       const show = await api.getShowById(showId);
       this.selectedShow = show;
     },
-    async searchShows(searchQuery: string): Promise<void> {
-      const shows = await api.getShowsBySearchQuery(searchQuery);
-      console.log('shows', shows);
+    updateSearchQuery(query: string): void {
+      this.searchQuery = query;
+    },
+    async searchShows(): Promise<void> {
+      const shows = await api.getShowsBySearchQuery(this.searchQuery);
+      
       const updatedShows = shows.map((item: { score: number, show: Show }) => ({
         genres: item.show.genres ? item.show.genres : [],
         id: item.show.id,
@@ -67,7 +72,7 @@ export const useShowsStore = defineStore('shows', {
         status: item.show.status,
         network: item.show.network,
       }));
-      console.log('updatedShows', updatedShows);
+
       this.shows = updatedShows;
     },
   },

@@ -3,7 +3,6 @@ import SearchInput from '@/components/SearchInput.vue';
 import ShowInfoCard from '@/components/ShowInfoCard.vue';
 import { useShowsStore } from '@/stores/shows.store';
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
 
 const showsStore = useShowsStore();
 const router = useRouter();
@@ -18,14 +17,12 @@ async function navigateToShow(showId: number) {
   router.push(`/show-overview/${showId}`);
 }
 
-const searchQuery = ref('');
-
 function updateSearchQuery(query: string) {
-  searchQuery.value = query;
+  showsStore.updateSearchQuery(query);
 }
 
 function searchShows() {
-  showsStore.searchShows(searchQuery.value);
+  showsStore.searchShows();
 }
 
 </script>
@@ -35,7 +32,7 @@ function searchShows() {
     <header class="header">
       <SearchInput
         placeholder="Search shows"
-        :model-value="searchQuery"
+        :model-value="showsStore.searchQuery"
         @update:model-value="updateSearchQuery"
       />
       <button class="action-button" @click="searchShows">Search</button>
