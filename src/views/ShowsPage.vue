@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import SearchInput from '@/components/SearchInput.vue';
 import ShowInfoCard from '@/components/ShowInfoCard.vue';
 import { useShowsStore } from '@/stores/shows.store';
 import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 
 const showsStore = useShowsStore();
 const router = useRouter();
@@ -16,13 +18,27 @@ async function navigateToShow(showId: number) {
   router.push(`/show-overview/${showId}`);
 }
 
+const searchQuery = ref('');
+
+function updateSearchQuery(query: string) {
+  searchQuery.value = query;
+}
+
+function searchShows() {
+  console.log('searchShows', searchQuery.value);
+}
 
 </script>
 
 <template>
   <div class="shows-page">
     <header class="header">
-      <button class="back-button" @click="navigateToHome">Back to Home</button>
+      <button class="action-button" @click="navigateToHome">Back to Home</button>
+      <SearchInput
+        :model-value="searchQuery"
+        @update:model-value="updateSearchQuery"
+      />
+      <button class="action-button" @click="searchShows">Search</button>
     </header>
 
     <section class="shows-grid">
@@ -48,7 +64,7 @@ async function navigateToShow(showId: number) {
   margin-bottom: 2rem;
 }
 
-.back-button {
+.action-button {
   background-color: #3498db;
   border: none;
   border-radius: 4px;
@@ -58,7 +74,7 @@ async function navigateToShow(showId: number) {
   transition: background-color 0.2s;
 }
 
-.back-button:hover {
+.action-button:hover {
   background-color: #2980b9;
 }
 
