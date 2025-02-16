@@ -4,6 +4,7 @@ import { Paths } from '@/api/paths.api';
 import type { Show } from '@/models/model';
 
 const showPath = () => new PathBuilder().addPath(Paths.shows);
+const searchPath = () => new PathBuilder().addPath(Paths.search).addPath(Paths.shows);
 
 const showsApi = {
   getShowsByPageNumber: async (pageNumber: number) => {
@@ -22,8 +23,9 @@ const showsApi = {
     const path = showPath().addPath(showId).addPath(Paths.seasons);
     return (await api.get(path.build())).data;
   },
-  searchShows: async (query: string): Promise<Show[]> => {
-    const path = showPath().addPath(Paths.search).addQuery('q', query).build();
+  getShowsBySearchQuery: async (query: string): Promise<Show[]> => {
+    const path = searchPath().addQuery('q', query).build();
+    console.log('path', path);
     return (await api.get(path)).data;
   },
 }

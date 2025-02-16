@@ -49,7 +49,7 @@ interface ShowInfoCardData {
   status: string;
 }
 
-enum ShowTableHeaders {
+enum ShowInfoCardHeaders {
   NAME = 'Name',
   RATING = 'Rating',
   STATUS = 'Status',
@@ -107,4 +107,4 @@ interface CastMember {
 }
 
 export type { CastMember, Episode, Season, Show, ShowInfoCardData };
-export { ShowTableHeaders };
+export { ShowInfoCardHeaders };

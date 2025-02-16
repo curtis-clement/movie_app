@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
-import showsApi from '@/api/modules/shows.api';
+import api from '@/api';
 import type { ShowInfoCardData, Show } from '@/models/model';
 
 interface State {
@@ -23,7 +23,7 @@ export const useShowsStore = defineStore('shows', {
       
       for (let currentPage = 1; currentPage < pagesToFetch; currentPage++) {
         try {
-          const fetchedShows = await showsApi.getShowsByPageNumber(currentPage);
+          const fetchedShows = await api.getShowsByPageNumber(currentPage);
           if (fetchedShows && fetchedShows.length > 0) {
             console.log('fetchedShows', fetchedShows);
             const shows = fetchedShows.map((show: Show) => ({
@@ -52,8 +52,12 @@ export const useShowsStore = defineStore('shows', {
       }
     },
     async fetchShowById(showId: number): Promise<void> {
-      const show = await showsApi.getShowById(showId);
+      const show = await api.getShowById(showId);
       this.selectedShow = show;
+    },
+    async searchShows(searchQuery: string): Promise<void> {
+      const shows = await api.getShowsBySearchQuery(searchQuery);
+      console.log('shows', shows);
     },
   },
   getters: {

@@ -25,7 +25,7 @@ function updateSearchQuery(query: string) {
 }
 
 function searchShows() {
-  console.log('searchShows', searchQuery.value);
+  showsStore.searchShows(searchQuery.value);
 }
 
 </script>
