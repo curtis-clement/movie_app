@@ -26,6 +26,9 @@ function isOptionSelected(filterName: string, option: string) {
   return props.filters.find(f => f.filterName === filterName)?.selectedOptions.includes(option);
 }
 
+function clearFilters() {
+  emits('clearFilters');
+}
 </script>
 
 <template>
@@ -42,7 +45,7 @@ function isOptionSelected(filterName: string, option: string) {
           ▼
         </span>
       </div>
-
+      <button class="clear-filters-button" @click="clearFilters">Clear Filters</button>
     </div>
 
     <div v-if="props.selectedFilterName" class="filter-chips">
@@ -98,5 +101,19 @@ function isOptionSelected(filterName: string, option: string) {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+}
+
+.clear-filters-button {
+  background-color: #3498db;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.2s;
+}
+
+.clear-filters-button:hover {
+  background-color: #2980b9;
 }
 </style>

@@ -70,6 +70,10 @@ function handleChipClick(filterName: string, option: string) {
     showsStore.setSelectedFilterByRating(option as RatingFilterOption);
   }
 }
+
+function clearFilters() {
+  showsStore.clearAllFilters();
+}
 </script>
 
 <template>
@@ -81,7 +85,6 @@ function handleChipClick(filterName: string, option: string) {
         @update:model-value="updateSearchQuery"
       />
       <button class="action-button" @click="searchShows">Search</button>
-      <button class="action-button" @click="navigateToHome">Back to Home</button>
     </header>
 
     <section class="filters-panel">
@@ -90,6 +93,7 @@ function handleChipClick(filterName: string, option: string) {
         :selected-filter-name="selectedFilterName"
         @toggle-filter="toggleFilter"
         @chip-click="handleChipClick"
+        @clear-filters="clearFilters"
       />
     </section>
 

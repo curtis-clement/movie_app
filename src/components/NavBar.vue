@@ -23,4 +23,8 @@ nav a {
   text-decoration: none;
   font-size: 1.25rem;
 }
+
+nav a.router-link-active {
+  text-decoration: underline;
+}
 </style>
