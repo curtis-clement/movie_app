@@ -8,8 +8,8 @@ const searchPath = () => new PathBuilder().addPath(Paths.search).addPath(Paths.s
 
 const showsApi = {
   getShowsByPageNumber: async (pageNumber: number) => {
-    const response = await api.get(`/shows?page=${pageNumber}`);
-    return response.data;
+    const path = showPath().addQuery('page', pageNumber.toString());
+    return (await api.get(path.build())).data;
   },
   getShowById: async (showId: number) => {
     const path = showPath().addPath(showId);

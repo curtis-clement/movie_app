@@ -1,21 +1,15 @@
 <script setup lang="ts">
 import SearchInput from '@/components/SearchInput.vue';
 import ShowInfoCard from '@/components/ShowInfoCard.vue';
-// import TextChip from '@/components/TextChip.vue';
 import FilterPanel from '@/components/FilterPanel.vue';
 import { useShowsStore } from '@/stores/shows.store';
 import { useRouter } from 'vue-router';
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { FilterCategories, RatingFilterOption, ShowStatusFilterOption } from '@/models/filter.model';
 import { Routes } from '@/models/routes.model';
 
 const showsStore = useShowsStore();
 const router = useRouter();
-
-
-function navigateToHome() {
-  router.push(Routes.HOME);
-}
 
 async function navigateToShow(showId: number) {
   await showsStore.fetchShowById(showId);
@@ -31,6 +25,7 @@ function searchShows() {
 }
 
 const selectedFilterName = ref('');
+const areShowsLoading = ref(false);
 
 const filters = computed(() => {
   const filters = [
@@ -74,6 +69,14 @@ function handleChipClick(filterName: string, option: string) {
 function clearFilters() {
   showsStore.clearAllFilters();
 }
+
+onMounted(async () => {
+  if (showsStore.shows.length === 0) {
+    areShowsLoading.value = true;
+    await showsStore.fetchAllShows();
+    areShowsLoading.value = false;
+  }
+});
 </script>
 
 <template>
@@ -97,7 +100,14 @@ function clearFilters() {
       />
     </section>
 
-    <section class="shows-grid">
+    <section v-if="areShowsLoading" class="shows-grid">
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading shows...</div>
+      </div>
+    </section>
+    
+    <section v-else class="shows-grid">
       <ShowInfoCard
         v-for="show in showsStore.allCurrentShows"
         :key="show.id"
@@ -111,8 +121,8 @@ function clearFilters() {
 
 <style scoped>
 .shows-page {
-  margin: 0 auto;
   max-width: 1400px;
+  margin: 0 auto;
   padding: 1rem;
 }
 
@@ -160,5 +170,47 @@ function clearFilters() {
 
 .card-wrapper {
   cursor: pointer;
+}
+
+.loading-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / -1; /* Spans all columns in the grid */
+  justify-content: center;
+  min-height: 300px;
+  width: 100%;
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+  border: 4px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  height: 40px;
+  margin-bottom: 1rem;
+  width: 40px;
+}
+
+.loading-text {
+  color: #666;
+  font-size: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .loading-spinner {
+    border-width: 3px;
+    height: 32px;
+    width: 32px;
+  }
+
+  .loading-text {
+    font-size: 0.875rem;
+  }
 }
 </style>

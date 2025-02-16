@@ -1,18 +1,13 @@
 <script setup lang="ts">
 import TextChip from '@/components/TextChip.vue';
-
-interface FilterOption {
-  filterName: string;
-  options: string[];
-  selectedOptions: string[];
-}
+import type { FilterOption } from '@/models/filter.model';
 
 const props = defineProps<{
   selectedFilterName: string;
   filters: FilterOption[];
 }>();
 
-const emits = defineEmits(['toggleFilter', 'chipClick']);
+const emits = defineEmits(['toggleFilter', 'chipClick', 'clearFilters']);
 
 function toggleFilter(filterName: string) {
   emits('toggleFilter', filterName);

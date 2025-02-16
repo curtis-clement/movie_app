@@ -15,4 +15,11 @@ enum ShowStatusFilterOption {
   TO_BE_DETERMINED = 'To Be Determined',
 }
 
+interface FilterOption {
+  filterName: string;
+  options: string[];
+  selectedOptions: string[];
+}
+
 export { FilterCategories, RatingFilterOption, ShowStatusFilterOption };
+export type { FilterOption };
