@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import type { ShowInfoCardData } from '@/models/model';
 
+const emit = defineEmits(['showDetails']);
+
 const props = defineProps<{
+  actionBannerText: string;
   show: ShowInfoCardData;
 }>();
 </script>
@@ -9,22 +12,22 @@ const props = defineProps<{
 <template>
   <div class="show-info-card">
     <div class="image-container">
-      <img 
-        v-if="props.show.image" 
-        :src="props.show.image.medium" 
-        :alt="props.show.name" 
+      <img
+        v-if="props.show.image"
+        :src="props.show.image.medium"
+        :alt="props.show.name"
         class="card-image"
       />
     </div>
     <div class="show-info-card-content">
       <h3 class="show-title">{{ props.show.name }}</h3>
-      <div class="show-detail"><b>Rating:</b> {{ props.show.rating ? props.show.rating.average : 'N/A' }}</div>
+      <div class="show-detail"><b>Rating:</b> {{ props.show.rating ? props.show.rating : 'N/A' }}</div>
       <div class="show-detail"><b>Status:</b> {{ props.show.status }}</div>
       <div class="show-detail"><b>Network:</b> {{ props.show.network ? props.show.network.name : 'N/A' }}</div>
-      <div class="show-detail"><b>Genres:</b> {{ props.show.genres.join(', ') }}</div>
+      <div class="show-detail"><b>Genres:</b> {{ props.show.genres.join(' / ') }}</div>
     </div>
-    <div class="show-details-banner">
-      Show Details
+    <div class="action-banner" @click="emit('showDetails', props.show.id)">
+      {{ props.actionBannerText }}
     </div>
   </div>
 </template>
@@ -34,60 +37,60 @@ const props = defineProps<{
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
   transition: transform 0.2s;
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 .show-info-card:hover {
-  transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
 }
 
 .image-container {
-  width: 100%;
   aspect-ratio: 3/4;
   overflow: hidden;
+  width: 100%;
 }
 
 .card-image {
-  width: 100%;
   height: 100%;
   object-fit: cover;
+  width: 100%;
 }
 
 .show-info-card-content {
+  flex-grow: 1;
   padding: 1rem;
-  flex-grow: 1; /* This will push the banner to the bottom */
 }
 
 .show-title {
-  margin: 0 0 0.5rem 0;
   font-size: 1.25rem;
   font-weight: 600;
+  margin: 0 0 0.5rem 0;
 }
 
 .show-detail {
-  margin: 0.5rem 0;
   color: #666;
   font-size: 0.875rem;
+  margin: 0.5rem 0;
 }
 
-.show-details-banner {
+.action-banner {
   background-color: #3498db;
   color: white;
+  cursor: pointer;
+  font-size: 0.875rem;
+  margin-top: auto;
   padding: 0.75rem;
   text-align: center;
-  font-size: 0.875rem;
-  cursor: pointer;
   transition: background-color 0.2s;
-  margin-top: auto; /* Ensures banner stays at bottom */
 }
 
-.show-details-banner:hover {
+.action-banner:hover {
   background-color: #2980b9;
 }
 </style>

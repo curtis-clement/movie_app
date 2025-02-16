@@ -30,6 +30,8 @@ async function navigateToShow(showId: number) {
         v-for="show in showsStore.allCurrentShows"
         :key="show.id"
         :show="show"
+        actionBannerText="View show details"
+        @show-details="navigateToShow(show.id)"
       />
     </section>
   </div>

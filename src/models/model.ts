@@ -45,7 +45,7 @@ interface ShowInfoCardData {
   image: Image;
   name: string;
   network: Network;
-  rating: Rating;
+  rating: number;
   status: string;
 }
 
