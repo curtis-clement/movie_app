@@ -1,14 +1,90 @@
 <script setup lang="ts">
-import DataTable from '@/components/DataTable.vue';
+import ShowInfoCard from '@/components/ShowInfoCard.vue';
 import { useShowsStore } from '@/stores/shows.store';
-import { ShowTableHeaders } from '@/models/model';
+import { useRouter } from 'vue-router';
 
 const showsStore = useShowsStore();
+const router = useRouter();
 
-const headers = Object.values(ShowTableHeaders);
+
+function navigateToHome() {
+  router.push('/');
+}
+
+async function navigateToShow(showId: number) {
+  await showsStore.fetchShowById(showId);
+  router.push(`/show-overview/${showId}`);
+}
+
 
 </script>
 
 <template>
-  <DataTable :headers="headers" :data="showsStore.showTableData" />
+  <div class="shows-page">
+    <header class="header">
+      <button class="back-button" @click="navigateToHome">Back to Home</button>
+    </header>
+
+    <section class="shows-grid">
+      <ShowInfoCard
+        v-for="show in showsStore.allCurrentShows"
+        :key="show.id"
+        :show="show"
+      />
+    </section>
+  </div>
 </template>
+
+<style scoped>
+.shows-page {
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 1rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  background-color: #3498db;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.2s;
+}
+
+.back-button:hover {
+  background-color: #2980b9;
+}
+
+.shows-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  justify-items: center;
+}
+
+@media (max-width: 768px) {
+  .shows-page {
+    padding: 0.75rem;
+  }
+  
+  .shows-grid {
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .shows-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+.card-wrapper {
+  cursor: pointer;
+}
+</style>

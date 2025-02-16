@@ -1,10 +1,10 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
 import showsApi from '@/api/modules/shows.api';
-import type { ShowTableData, Show } from '@/models/model';
+import type { ShowInfoCardData, Show } from '@/models/model';
 
 interface State {
-  shows: ShowTableData[];
+  shows: ShowInfoCardData[];
   selectedShow: Show | null;
 }
 
@@ -21,11 +21,22 @@ export const useShowsStore = defineStore('shows', {
     async fetchAllShows(): Promise<void> {
       const pagesToFetch = 5;
       
-      for (let currentPage = 0; currentPage < pagesToFetch; currentPage++) {
+      for (let currentPage = 1; currentPage < pagesToFetch; currentPage++) {
         try {
           const fetchedShows = await showsApi.getShowsByPageNumber(currentPage);
           if (fetchedShows && fetchedShows.length > 0) {
-            this.shows.push(...fetchedShows);
+            console.log('fetchedShows', fetchedShows);
+            const shows = fetchedShows.map((show: Show) => ({
+              genres: show.genres,
+              id: show.id,
+              image: show.image,
+              name: show.name,
+              rating: show.rating.average,
+              status: show.status,
+              network: show.network,
+            }));
+
+            this.shows.push(...shows);
           } else {
             console.log('No more shows available');
             break;
@@ -46,15 +57,8 @@ export const useShowsStore = defineStore('shows', {
     },
   },
   getters: {
-    showTableData: (state) => {
-      return state.shows.slice(0, 1000).map((show) => ({
-        genres: show.genres,
-        id: show.id,
-        name: show.name,
-        rating: show.rating,
-        status: show.status,
-        network: show.network,
-      }));
+    allCurrentShows: (state) => {
+      return state.shows;
     },
   },
 });

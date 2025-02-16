@@ -39,9 +39,10 @@ interface Show {
   url: string;
 }
 
-interface ShowTableData {
+interface ShowInfoCardData {
   genres: string[];
   id: number;
+  image: Image;
   name: string;
   network: Network;
   rating: Rating;
@@ -50,9 +51,9 @@ interface ShowTableData {
 
 enum ShowTableHeaders {
   NAME = 'Name',
-  NETWORK = 'Network',
   RATING = 'Rating',
   STATUS = 'Status',
+  NETWORK = 'Network',
   COUNTRY = 'Country',
 }
 
@@ -105,5 +106,5 @@ interface CastMember {
   voice: boolean;
 }
 
-export type { CastMember, Episode, Season, Show, ShowTableData };
+export type { CastMember, Episode, Season, Show, ShowInfoCardData };
 export { ShowTableHeaders };
