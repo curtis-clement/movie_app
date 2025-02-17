@@ -1,6 +1,6 @@
 import { beforeEach, describe, it, expect } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
-import SearchInput from '@/components/SearchInput.vue';
+import SearchInput from '@/core/components/SearchInput.vue';
 
 const mountComponent = (props: {
   placeholder: string;

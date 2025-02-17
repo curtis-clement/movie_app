@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import DefaultButton from '@/components/DefaultButton.vue';
-import TextChip from '@/components/TextChip.vue';
+import DefaultButton from '@/core/components/DefaultButton.vue';
+import TextChip from '@/core/components/TextChip.vue';
 import type { FilterOption } from '@/models/filter.model';
 
 const props = defineProps<{

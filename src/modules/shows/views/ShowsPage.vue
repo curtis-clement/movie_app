@@ -2,13 +2,13 @@
 import { computed, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { Routes } from '@/models/routes.model';
-import { useShowsStore } from '@/stores/shows.store';
-import SearchInput from '@/components/SearchInput.vue';
-import ShowInfoCard from '@/components/ShowInfoCard.vue';
-import FilterPanel from '@/components/FilterPanel.vue';
-import DefaultButton from '@/components/DefaultButton.vue';
+import { useShowsStore } from '@/modules/shows/stores/shows.store';
+import SearchInput from '@/core/components/SearchInput.vue';
+import ShowInfoCard from '@/modules/shows/components/ShowInfoCard.vue';
+import FilterPanel from '@/core/components/FilterPanel.vue';
+import DefaultButton from '@/core/components/DefaultButton.vue';
 import { FilterCategories, RatingFilterOption, ShowStatusFilterOption } from '@/models/filter.model';
-import PaginationControl from '@/components/PaginationControl.vue';
+import PaginationControl from '@/core/components/PaginationControl.vue';
 
 const showsStore = useShowsStore();
 const router = useRouter();
@@ -84,8 +84,9 @@ async function clearSearchQuery() {
 async function handlePageChange(newPage: number) {
   showsStore.setCurrentPage(newPage);
   
-  // Only fetch more shows if we're close to the end of our cached data
-  if (newPage * showsStore.itemsPerPage > showsStore.shows.length - showsStore.itemsPerPage) {
+  const areMoreShowsNeeded = newPage * showsStore.itemsPerPage > showsStore.shows.length - showsStore.itemsPerPage;
+
+  if (areMoreShowsNeeded) {
     areShowsLoading.value = true;
     await showsStore.fetchAllShows();
     areShowsLoading.value = false;

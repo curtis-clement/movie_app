@@ -1,6 +1,6 @@
 import { beforeEach, describe, it, expect } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
-import DefaultButton from '@/components/DefaultButton.vue';
+import DefaultButton from '@/core/components/DefaultButton.vue';
 
 const mountComponent = (props: {
   disabled?: boolean;

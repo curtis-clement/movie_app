@@ -1,6 +1,6 @@
 import { beforeEach, describe, it, expect } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
-import FilterPanel from '@/components/FilterPanel.vue';
+import FilterPanel from '@/core/components/FilterPanel.vue';
 import type { FilterOption } from '@/models/filter.model';
 
 const props = {

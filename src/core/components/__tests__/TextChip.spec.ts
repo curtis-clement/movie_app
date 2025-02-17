@@ -1,6 +1,6 @@
 import { beforeEach, describe, it, expect } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
-import TextChip from '@/components/TextChip.vue';
+import TextChip from '@/core/components/TextChip.vue';
 
 const mountComponent = (props: {
   text: string;

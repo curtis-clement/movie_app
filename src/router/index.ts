@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from '@/views/HomePage.vue';
-import ShowsPage from '@/views/ShowsPage.vue';
-import ShowOverview from '@/views/ShowOverview.vue';
+import HomePage from '@/core/views/HomePage.vue';
+import ShowsPage from '@/modules/shows/views/ShowsPage.vue';
+import ShowOverview from '@/modules/shows/views/ShowOverview.vue';
 import { Routes } from '@/models/routes.model';
 
 const router = createRouter({

@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
-import api from '@/api';
-import { type ShowInfoCardData, type Show } from '@/models/shows.model';
+import api from '@/core/api';
+import { type ShowInfoCardData, type Show } from '@/modules/shows/models/shows.model';
 import { RatingFilterOption } from '@/models/filter.model';
 import { filterByGenre, filterByStatus, filterByRating } from '@/helpers/util';
 
@@ -58,7 +58,7 @@ export const useShowsStore = defineStore('shows', {
               network: show.network,
             }));
 
-            shows.forEach(show => {
+            shows.forEach((show: ShowInfoCardData) => {
               if (!this.shows.some(existing => existing.id === show.id)) {
                 newShows.add(show);
               }
@@ -66,14 +66,14 @@ export const useShowsStore = defineStore('shows', {
             
             apiPage++;
           } else {
-            break;
+            return;
           }
         } catch (error: unknown) {
           if (error instanceof AxiosError && error.response?.status === 404) {
-            break;
+            return;
           } else {
             console.error('Error fetching shows:', error);
-            break;
+            return;
           }
         }
       }

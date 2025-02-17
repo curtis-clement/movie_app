@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { useShowsStore } from '@/stores/shows.store';
+import { useShowsStore } from '@/modules/shows/stores/shows.store';
 
 const route = useRoute();
 const showsStore = useShowsStore();
