@@ -37,10 +37,10 @@ describe('SearchInput', () => {
     expect(wrapper.find('input').attributes('placeholder')).toBe('Search shows');
   });
 
-  it('emits update:modelValue event when input value changes', () => {
+  it('emits update:model-value event when input value changes', () => {
     const input = wrapper.find('input');
     input.setValue('New value');
-    expect(wrapper.emitted('update:modelValue')).toEqual([['New value']]);
+    expect(wrapper.emitted('update:model-value')).toEqual([['New value']]);
   });
 
   it('does not emit update:modelValue event when input is disabled', async () => {
@@ -48,6 +48,6 @@ describe('SearchInput', () => {
     await wrapper.vm.$nextTick();
     const input = wrapper.find('input');
     input.setValue('New value');
-    expect(wrapper.emitted('update:modelValue')).toBeUndefined();
+    expect(wrapper.emitted('update:model-value')).toBeUndefined();
   });
 });

@@ -9,11 +9,11 @@ const props = withDefaults(defineProps<{
   text: '',
 });
 
-const emit = defineEmits(['emitClick']);
+const emit = defineEmits(['emit-click']);
 
 function emitClick() {
   if (!props.disabled) {
-    emit('emitClick');
+    emit('emit-click');
   }
 }
 </script>

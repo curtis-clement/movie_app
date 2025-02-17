@@ -5,14 +5,14 @@ const props = withDefaults(defineProps<{
   disabled: false,
 });
 
-const emit = defineEmits(['buttonClick']);
+const emit = defineEmits(['button-click']);
 </script>
 
 <template>
   <button
     class="default-button"
     :disabled="props.disabled"
-    @click="emit('buttonClick')"
+    @click="emit('button-click')"
   >
     <div class="button-content">
       <slot name="text"/>

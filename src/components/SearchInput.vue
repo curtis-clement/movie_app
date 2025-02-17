@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
   disabled: false,
 });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:model-value']);
 
 </script>
 
@@ -18,7 +18,7 @@ const emit = defineEmits(['update:modelValue']);
     :placeholder="props.placeholder" 
     :value="props.modelValue" 
     :disabled="props.disabled"
-    @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)" 
+    @input="emit('update:model-value', ($event.target as HTMLInputElement).value)" 
   />
 </template>
 

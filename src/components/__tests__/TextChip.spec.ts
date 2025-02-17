@@ -39,13 +39,13 @@ describe('TextChip', () => {
 
   it('emits click event when clicked', () => {
     wrapper.find('.text-chip').trigger('click');
-    expect(wrapper.emitted('emitClick')).toBeDefined();
+    expect(wrapper.emitted('emit-click')).toBeDefined();
   });
 
   it('does not emit click event when disabled', async () => {
     wrapper.setProps({ disabled: true });
     await wrapper.vm.$nextTick();
     wrapper.find('.text-chip').trigger('click');
-    expect(wrapper.emitted('emitClick')).toBeUndefined();
+    expect(wrapper.emitted('emit-click')).toBeUndefined();
   });
 });

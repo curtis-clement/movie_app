@@ -48,21 +48,21 @@ describe('FilterPanel', () => {
     expect(wrapper.text()).toContain('Option 3');
   });
 
-  it('emits toggleFilter event when a filter header is clicked', () => {
+  it('emits toggle-filter event when a filter header is clicked', () => {
     wrapper.find('.filter-header').trigger('click');
-    expect(wrapper.emitted('toggleFilter')).toBeDefined();
-    expect(wrapper.emitted('toggleFilter')?.[0]).toEqual(['Test Filter']);
+    expect(wrapper.emitted('toggle-filter')).toBeDefined();
+    expect(wrapper.emitted('toggle-filter')?.[0]).toEqual(['Test Filter']);
   });
 
-  it('emits chipClick event when a filter option is clicked', () => {
+  it('emits chip-click event when a filter option is clicked', () => {
     wrapper.find('.text-chip').trigger('click');
-    expect(wrapper.emitted('chipClick')).toBeDefined();
-    expect(wrapper.emitted('chipClick')?.[0]).toEqual(['Test Filter', 'Option 1']);
+    expect(wrapper.emitted('chip-click')).toBeDefined();
+    expect(wrapper.emitted('chip-click')?.[0]).toEqual(['Test Filter', 'Option 1']);
   });
 
-  it('emits clearFilters event when the clear filters button is clicked', () => {
-    wrapper.find('.clear-filters-button').trigger('click');
-    expect(wrapper.emitted('clearFilters')).toBeDefined();
+  it('emits clear-filters event when the clear filters button is clicked', () => {
+    wrapper.find('button').trigger('click');
+    expect(wrapper.emitted('clear-filters')).toBeDefined();
   });
 
   it('calculates isOptionSelected correctly', async () => {

@@ -64,10 +64,10 @@ describe('ShowInfoCard', () => {
     expect(wrapper.text()).toContain(mockShow.genres.join(' / '));
   });
   
-  it('emits show details event when action banner is clicked', () => {
+  it('emits show-details event when action banner is clicked', () => {
     wrapper.find('.action-banner').trigger('click');
-    expect(wrapper.emitted('showDetails')).toBeDefined();
-    expect(wrapper.emitted('showDetails')?.[0]).toEqual([mockShow.id]);
+    expect(wrapper.emitted('show-details')).toBeDefined();
+    expect(wrapper.emitted('show-details')?.[0]).toEqual([mockShow.id]);
   });
 });
   

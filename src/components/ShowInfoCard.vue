@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ShowInfoCardData } from '@/models/model';
 
-const emit = defineEmits(['showDetails']);
+const emit = defineEmits(['show-details']);
 
 const props = defineProps<{
   actionBannerText: string;
@@ -30,7 +30,7 @@ const props = defineProps<{
       <div class="show-detail"><b>Network:</b> {{ props.show.network ? props.show.network.name : 'N/A' }}</div>
       <div class="show-detail"><b>Genres:</b> {{ props.show.genres.join(' / ') }}</div>
     </div>
-    <div class="action-banner" @click="emit('showDetails', props.show.id)">
+    <div class="action-banner" @click="emit('show-details', props.show.id)">
       {{ props.actionBannerText }}
     </div>
   </div>

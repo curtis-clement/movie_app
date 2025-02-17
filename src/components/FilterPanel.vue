@@ -8,14 +8,14 @@ const props = defineProps<{
   filters: FilterOption[];
 }>();
 
-const emits = defineEmits(['toggleFilter', 'chipClick', 'clearFilters']);
+const emits = defineEmits(['toggle-filter', 'chip-click', 'clear-filters']);
 
 function toggleFilter(filterName: string) {
-  emits('toggleFilter', filterName);
+  emits('toggle-filter', filterName);
 }
 
 function handleChipClick(filterName: string, option: string) {
-  emits('chipClick', filterName, option);
+  emits('chip-click', filterName, option);
 }
 
 function isOptionSelected(filterName: string, option: string) {
@@ -23,7 +23,7 @@ function isOptionSelected(filterName: string, option: string) {
 }
 
 function clearFilters() {
-  emits('clearFilters');
+  emits('clear-filters');
 }
 </script>
 
