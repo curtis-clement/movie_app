@@ -11,6 +11,12 @@ import { FilterCategories, RatingFilterOption, ShowStatusFilterOption } from '@/
 
 const showsStore = useShowsStore();
 const router = useRouter();
+const selectedFilterName = ref('');
+const areShowsLoading = ref(false);
+const areButtonsDisabled = computed(() => {
+  return showsStore.searchQuery.length === 0;
+});
+
 
 async function navigateToShow(showId: number) {
   await showsStore.fetchShowById(showId);
@@ -22,14 +28,10 @@ function updateSearchQuery(query: string) {
 }
 
 function searchShows() {
+  areShowsLoading.value = true;
   showsStore.searchShows();
+  areShowsLoading.value = false;
 }
-
-const selectedFilterName = ref('');
-const areShowsLoading = ref(false);
-const areButtonsDisabled = computed(() => {
-  return showsStore.searchQuery.length === 0;
-});
 
 const filters = computed(() => {
   const filters = [

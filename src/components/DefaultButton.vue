@@ -27,9 +27,9 @@ const emit = defineEmits(['button-click']);
   border-radius: 4px;
   color: white;
   cursor: pointer;
+  margin-right: 0.5rem;
   padding: 0.5rem 1rem;
   transition: background-color 0.2s;
-  margin-right: 0.5rem;
 }
 
 .default-button:hover {
@@ -37,8 +37,8 @@ const emit = defineEmits(['button-click']);
 }
 
 .button-content {
-  display: flex;
   align-items: center;
+  display: flex;
   font-size: .8rem;
   gap: 0.5rem;
 }
