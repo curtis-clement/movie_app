@@ -82,10 +82,14 @@ async function clearSearchQuery() {
 }
 
 async function handlePageChange(newPage: number) {
-  areShowsLoading.value = true;
   showsStore.setCurrentPage(newPage);
-  await showsStore.fetchAllShows();
-  areShowsLoading.value = false;
+  
+  // Only fetch more shows if we're close to the end of our cached data
+  if (newPage * showsStore.itemsPerPage > showsStore.shows.length - showsStore.itemsPerPage) {
+    areShowsLoading.value = true;
+    await showsStore.fetchAllShows();
+    areShowsLoading.value = false;
+  }
 }
 
 onMounted(async () => {

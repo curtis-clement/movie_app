@@ -14,6 +14,7 @@ interface State {
   selectedFilterByRating: RatingFilterOption | '';
   currentPage: number;
   itemsPerPage: number;
+  totalShows: number;
 }
 
 const initialState: State = {
@@ -25,6 +26,7 @@ const initialState: State = {
   selectedFilterByRating: '',
   currentPage: 1,
   itemsPerPage: 500,
+  totalShows: 0,
 }
 
 export const useShowsStore = defineStore('shows', {
@@ -33,10 +35,16 @@ export const useShowsStore = defineStore('shows', {
   }),
   actions: {
     async fetchAllShows(): Promise<void> {
-      const requiredShows = this.currentPage * this.itemsPerPage;
-      let apiPage = Math.floor(this.shows.length / 250);
+      const requiredShows = (this.currentPage + 1) * this.itemsPerPage;
       
-      while (this.shows.length < requiredShows) {
+      if (this.shows.length >= requiredShows) {
+        return;
+      }
+
+      let apiPage = Math.floor(this.shows.length / 250);
+      const newShows = new Set<ShowInfoCardData>();
+
+      while (this.shows.length + newShows.size < requiredShows) {
         try {
           const fetchedShows = await api.getShowsByPageNumber(apiPage);
           if (fetchedShows && fetchedShows.length > 0) {
@@ -50,20 +58,28 @@ export const useShowsStore = defineStore('shows', {
               network: show.network,
             }));
 
-            this.shows.push(...shows);
+            shows.forEach(show => {
+              if (!this.shows.some(existing => existing.id === show.id)) {
+                newShows.add(show);
+              }
+            });
+            
             apiPage++;
           } else {
-            return;
+            break;
           }
         } catch (error: unknown) {
           if (error instanceof AxiosError && error.response?.status === 404) {
-            return;
+            break;
           } else {
             console.error('Error fetching shows:', error);
-            return;
+            break;
           }
         }
       }
+      
+      this.shows = [...this.shows, ...Array.from(newShows) as ShowInfoCardData[]];
+      this.totalShows = this.shows.length;
     },
     async fetchShowById(showId: number): Promise<void> {
       const show = await api.getShowById(showId);

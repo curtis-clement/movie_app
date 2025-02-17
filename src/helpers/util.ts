@@ -19,11 +19,13 @@ function filterByRating(shows: ShowInfoCardData[], ratingOption: RatingFilterOpt
   if (ratingOption === '') {
     return shows;
   }
-  if (ratingOption === RatingFilterOption.HIGHEST) {
-    return shows.sort((a, b) => b.rating - a.rating);
-  } else {
-    return shows.sort((a, b) => a.rating - b.rating);
-  }
+
+  const sortedShows = [...shows];
+  return sortedShows.sort((a, b) => {
+    const multiplier = ratingOption === RatingFilterOption.HIGHEST ? -1 : 1;
+    const ratingDiff = (a.rating || 0) - (b.rating || 0);
+    return ratingDiff === 0 ? a.id - b.id : multiplier * ratingDiff;
+  });
 }
 
 export { filterByGenre, filterByStatus, filterByRating };
