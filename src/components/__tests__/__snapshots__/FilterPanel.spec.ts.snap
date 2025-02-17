@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FilterPanel > renders the component 1`] = `
+"<div data-v-42ed72f1="" class="filter-panel">
+  <div data-v-42ed72f1="" class="filter-headers">
+    <div data-v-42ed72f1="" class="filter-header">Test Filter <span data-v-42ed72f1="" class="arrow arrow-down"> ▼ </span></div><button data-v-42ed72f1="" class="clear-filters-button">Clear Filters</button>
+  </div>
+  <div data-v-42ed72f1="" class="filter-chips">
+    <div data-v-291dfa27="" data-v-42ed72f1="" class="text-chip">Option 1</div>
+    <div data-v-291dfa27="" data-v-42ed72f1="" class="text-chip">Option 2</div>
+    <div data-v-291dfa27="" data-v-42ed72f1="" class="text-chip">Option 3</div>
+  </div>
+</div>"
+`;
