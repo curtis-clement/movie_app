@@ -9,7 +9,7 @@ interface State {
 
 const initialState: State = {
   selectedShowCast: [],
-  isCastLoading: false,
+  isCastLoading: true,
 }
 
 export const useCastStore = defineStore('cast', {
@@ -18,7 +18,6 @@ export const useCastStore = defineStore('cast', {
   }),
   actions: {
     async fetchCastByShowId(showId: number): Promise<void> {
-      console.log('FETCHING CAST');
       this.isCastLoading = true;
       const cast = await api.getCastByShowId(showId);
       this.selectedShowCast = cast;
