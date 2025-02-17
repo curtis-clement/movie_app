@@ -69,22 +69,6 @@ interface Season {
   url: string;
 }
 
-interface Episode {
-  airdate: string;
-  airstamp: string;
-  airtime: string;
-  id: number;
-  image: Image;
-  name: string;
-  number: number;
-  rating: Rating;
-  runtime: number;
-  season: number;
-  summary: string | null;
-  type: string;
-  url: string;
-}
-
 interface CastMember {
   character: {
     id: number;
@@ -106,5 +90,5 @@ interface CastMember {
   voice: boolean;
 }
 
-export type { CastMember, Episode, Season, Show, ShowInfoCardData };
+export type { CastMember, Country, Image, Network, Rating, Season, Show, ShowInfoCardData };
 export { ShowInfoCardHeaders };
