@@ -1,7 +1,7 @@
 import api from '@/core/api/main.api';
 import PathBuilder from '@/core/api/utils.api';
 import { Paths } from '@/core/api/paths.api';
-import type { CastMember } from '@/modules/shows/models/shows.model';
+import type { CastMember } from '@/modules/cast/models/cast.models';
 
 const castApi = {
   getCastByShowId: async (showId: number): Promise<CastMember[]> => {
