@@ -18,7 +18,11 @@ const props = defineProps<{
         :alt="props.show.name"
         class="card-image"
       />
+      <div v-else class="image-placeholder">
+        Image not available
+      </div>
     </div>
+
     <div class="show-info-card-content">
       <h3 class="show-title">{{ props.show.name }}</h3>
       <div class="show-detail"><b>Rating:</b> {{ props.show.rating ? props.show.rating : 'N/A' }}</div>
@@ -54,6 +58,15 @@ const props = defineProps<{
   aspect-ratio: 3/4;
   overflow: hidden;
   width: 100%;
+}
+
+.image-placeholder {
+  align-items: center;
+  background-color: #e0e0e0;
+  color: #668;
+  display: flex;
+  height: 100%;
+  justify-content: center;
 }
 
 .card-image {
