@@ -1,7 +1,7 @@
 import { beforeEach, describe, it, expect } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import ShowInfoCard from '@/components/ShowInfoCard.vue';
-import type { ShowInfoCardData } from '@/models/model';
+import type { ShowInfoCardData } from '@/models/shows.model';
 
 const mockShow = {
   id: 1,

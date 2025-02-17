@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ShowInfoCardData } from '@/models/model';
+import type { ShowInfoCardData } from '@/models/shows.model';
 
 const emit = defineEmits(['show-details']);
 

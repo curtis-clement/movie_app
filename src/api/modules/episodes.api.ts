@@ -1,7 +1,7 @@
 import api from '@/api/main.api';
 import PathBuilder from '@/api/utils.api';
 import { Paths } from '@/api/paths.api';
-import type { Episode } from '@/models/model';
+import type { Episode } from '@/models/shows.model';
 
 const episodesApi = {
   getEpisodeListBySeasonId: async (seasonId: number): Promise<Episode[]> => {

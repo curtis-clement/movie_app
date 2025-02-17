@@ -8,6 +8,7 @@ import ShowInfoCard from '@/components/ShowInfoCard.vue';
 import FilterPanel from '@/components/FilterPanel.vue';
 import DefaultButton from '@/components/DefaultButton.vue';
 import { FilterCategories, RatingFilterOption, ShowStatusFilterOption } from '@/models/filter.model';
+import PaginationControl from '@/components/PaginationControl.vue';
 
 const showsStore = useShowsStore();
 const router = useRouter();
@@ -72,15 +73,17 @@ function handleChipClick(filterName: string, option: string) {
   }
 }
 
-function clearFilters() {
-  showsStore.clearAllFilters();
-}
-
 async function clearSearchQuery() {
   showsStore.clearSearchQuery();
   areShowsLoading.value = true;
-  // temporary fix to refresh the shows from the start -- remove after implementing alphabetical order by name
   showsStore.clearAllShows();
+  await showsStore.fetchAllShows();
+  areShowsLoading.value = false;
+}
+
+async function handlePageChange(newPage: number) {
+  areShowsLoading.value = true;
+  showsStore.setCurrentPage(newPage);
   await showsStore.fetchAllShows();
   areShowsLoading.value = false;
 }
@@ -118,9 +121,15 @@ onMounted(async () => {
         :selected-filter-name="selectedFilterName"
         @toggle-filter="toggleFilter"
         @chip-click="handleChipClick"
-        @clear-filters="clearFilters"
+        @clear-filters="showsStore.clearAllFilters();"
       />
     </section>
+
+    <PaginationControl
+      :current-page="showsStore.currentPage"
+      :has-next-page="showsStore.hasNextPage"
+      @page-change="handlePageChange"
+    />
 
     <section v-if="areShowsLoading" class="shows-grid">
       <div class="loading-container">
@@ -129,14 +138,16 @@ onMounted(async () => {
       </div>
     </section>
     
-    <section v-else class="shows-grid">
-      <ShowInfoCard
-        v-for="show in showsStore.allCurrentShows"
-        :key="show.id"
-        :show="show"
-        actionBannerText="View show details"
-        @show-details="navigateToShow(show.id)"
-      />
+    <section v-else>
+      <div class="shows-grid">
+        <ShowInfoCard
+          v-for="show in showsStore.paginatedShows"
+          :key="show.id"
+          :show="show"
+          actionBannerText="View show details"
+          @show-details="navigateToShow(show.id)"
+        />
+      </div>
     </section>
   </div>
 </template>
@@ -151,21 +162,6 @@ onMounted(async () => {
 .header {
   margin-bottom: 2rem;
 }
-
-/* .action-button {
-  background-color: #3498db;
-  border: none;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-  margin-right: 0.5rem;
-  padding: 0.5rem 1rem;
-  transition: background-color 0.2s;
-}
-
-.action-button:hover {
-  background-color: #2980b9;
-} */
 
 .shows-grid {
   display: grid;

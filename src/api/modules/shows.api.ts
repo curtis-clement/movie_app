@@ -1,7 +1,7 @@
 import api from '@/api/main.api';
 import PathBuilder from '@/api/utils.api';
 import { Paths } from '@/api/paths.api';
-import type { Show } from '@/models/model';
+import type { Show } from '@/models/shows.model';
 
 const showPath = () => new PathBuilder().addPath(Paths.shows);
 const searchPath = () => new PathBuilder().addPath(Paths.search).addPath(Paths.shows);

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { filterByGenre, filterByStatus, filterByRating } from '@/helpers/util';
 import { RatingFilterOption } from '@/models/filter.model';
-import type { ShowInfoCardData } from '@/models/model';
+import type { ShowInfoCardData } from '@/models/shows.model';
 
 const mockShows: ShowInfoCardData[] = [
   {

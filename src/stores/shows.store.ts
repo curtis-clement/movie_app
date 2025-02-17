@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
 import api from '@/api';
-import { type ShowInfoCardData, type Show } from '@/models/model';
+import { type ShowInfoCardData, type Show } from '@/models/shows.model';
 import { RatingFilterOption } from '@/models/filter.model';
 import { filterByGenre, filterByStatus, filterByRating } from '@/helpers/util';
 
@@ -12,6 +12,8 @@ interface State {
   selectedFilterByGenre: string[];
   selectedFilterByStatus: string[];
   selectedFilterByRating: RatingFilterOption | '';
+  currentPage: number;
+  itemsPerPage: number;
 }
 
 const initialState: State = {
@@ -21,6 +23,8 @@ const initialState: State = {
   selectedFilterByGenre: [],
   selectedFilterByStatus: [],
   selectedFilterByRating: '',
+  currentPage: 1,
+  itemsPerPage: 500,
 }
 
 export const useShowsStore = defineStore('shows', {
@@ -29,13 +33,13 @@ export const useShowsStore = defineStore('shows', {
   }),
   actions: {
     async fetchAllShows(): Promise<void> {
-      const pagesToFetch = 5;
+      const requiredShows = this.currentPage * this.itemsPerPage;
+      let apiPage = Math.floor(this.shows.length / 250);
       
-      for (let currentPage = 1; currentPage < pagesToFetch; currentPage++) {
+      while (this.shows.length < requiredShows) {
         try {
-          const fetchedShows = await api.getShowsByPageNumber(currentPage);
+          const fetchedShows = await api.getShowsByPageNumber(apiPage);
           if (fetchedShows && fetchedShows.length > 0) {
-            
             const shows = fetchedShows.map((show: Show) => ({
               genres: show.genres,
               id: show.id,
@@ -47,16 +51,16 @@ export const useShowsStore = defineStore('shows', {
             }));
 
             this.shows.push(...shows);
+            apiPage++;
           } else {
-            console.log('No more shows available');
-            break;
+            return;
           }
         } catch (error: unknown) {
           if (error instanceof AxiosError && error.response?.status === 404) {
-            break;
+            return;
           } else {
             console.error('Error fetching shows:', error);
-            break;
+            return;
           }
         }
       }
@@ -88,6 +92,7 @@ export const useShowsStore = defineStore('shows', {
       }));
 
       this.shows = updatedShows;
+      this.currentPage = 1;
     },
     setSelectedFilterByGenre(genre: string): void {
       if (this.selectedFilterByGenre.includes(genre)) {
@@ -120,6 +125,9 @@ export const useShowsStore = defineStore('shows', {
       this.clearSelectedFilterByStatus();
       this.clearSelectedFilterByRating();
     },
+    setCurrentPage(page: number): void {
+      this.currentPage = page;
+    },
   },
   getters: {
     allCurrentShows: (state) => {
@@ -131,6 +139,29 @@ export const useShowsStore = defineStore('shows', {
     allGeneresForCurrentShows: (state) => {
       const genres = new Set(state.shows.map((show) => show.genres).flat().sort());
       return Array.from(genres);
+    },
+    paginatedShows: (state) => {
+      const filteredShows = filterByRating(
+        filterByStatus(
+          filterByGenre(state.shows, state.selectedFilterByGenre),
+          state.selectedFilterByStatus
+        ),
+        state.selectedFilterByRating
+      );
+      
+      const start = (state.currentPage - 1) * state.itemsPerPage;
+      const end = start + state.itemsPerPage;
+      return filteredShows.slice(start, end);
+    },
+    hasNextPage: (state) => {
+      const filteredShows = filterByRating(
+        filterByStatus(
+          filterByGenre(state.shows, state.selectedFilterByGenre),
+          state.selectedFilterByStatus
+        ),
+        state.selectedFilterByRating
+      );
+      return filteredShows.length > state.currentPage * state.itemsPerPage;
     },
   },
 });
