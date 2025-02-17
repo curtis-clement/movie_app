@@ -65,6 +65,9 @@ export const useShowsStore = defineStore('shows', {
       const show = await api.getShowById(showId);
       this.selectedShow = show;
     },
+    clearAllShows(): void {
+      this.shows = [];
+    },
     updateSearchQuery(query: string): void {
       this.searchQuery = query;
     },

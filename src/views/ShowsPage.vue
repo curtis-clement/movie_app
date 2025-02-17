@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { computed, ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { Routes } from '@/models/routes.model';
+import { useShowsStore } from '@/stores/shows.store';
 import SearchInput from '@/components/SearchInput.vue';
 import ShowInfoCard from '@/components/ShowInfoCard.vue';
 import FilterPanel from '@/components/FilterPanel.vue';
-import { useShowsStore } from '@/stores/shows.store';
-import { useRouter } from 'vue-router';
-import { computed, ref, onMounted } from 'vue';
+import DefaultButton from '@/components/DefaultButton.vue';
 import { FilterCategories, RatingFilterOption, ShowStatusFilterOption } from '@/models/filter.model';
-import { Routes } from '@/models/routes.model';
 
 const showsStore = useShowsStore();
 const router = useRouter();
@@ -26,6 +27,9 @@ function searchShows() {
 
 const selectedFilterName = ref('');
 const areShowsLoading = ref(false);
+const areButtonsDisabled = computed(() => {
+  return showsStore.searchQuery.length === 0;
+});
 
 const filters = computed(() => {
   const filters = [
@@ -73,6 +77,8 @@ function clearFilters() {
 async function clearSearchQuery() {
   showsStore.clearSearchQuery();
   areShowsLoading.value = true;
+  // temporary fix to refresh the shows from the start -- remove after implementing alphabetical order by name
+  showsStore.clearAllShows();
   await showsStore.fetchAllShows();
   areShowsLoading.value = false;
 }
@@ -94,8 +100,14 @@ onMounted(async () => {
         :model-value="showsStore.searchQuery"
         @update:model-value="updateSearchQuery"
       />
-      <button class="action-button" @click="searchShows">Search</button>
-      <button class="action-button" @click="clearSearchQuery">Clear</button>
+      <DefaultButton @button-click="searchShows" :disabled="areButtonsDisabled">
+        <template #text>Search</template>
+      </DefaultButton>
+      <DefaultButton @button-click="clearSearchQuery" :disabled="areButtonsDisabled">
+        <template #text>
+          Clear
+        </template>
+      </DefaultButton>
     </header>
 
     <section class="filters-panel">
@@ -138,7 +150,7 @@ onMounted(async () => {
   margin-bottom: 2rem;
 }
 
-.action-button {
+/* .action-button {
   background-color: #3498db;
   border: none;
   border-radius: 4px;
@@ -151,7 +163,7 @@ onMounted(async () => {
 
 .action-button:hover {
   background-color: #2980b9;
-}
+} */
 
 .shows-grid {
   display: grid;

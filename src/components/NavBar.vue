@@ -1,12 +1,22 @@
 <script setup lang="ts">
 import { Routes } from '@/models/routes.model';
-
+import { PhHouse, PhPopcorn } from '@phosphor-icons/vue';
 </script>
 
 <template>
   <nav>
-    <router-link :to="Routes.HOME">Home</router-link>
-    <router-link :to="Routes.SHOWS">Shows</router-link>
+    <div>
+      <span class="icon-container">
+        <PhHouse :size="18" style="color: white;"/>
+        <router-link :to="Routes.HOME">Home</router-link>
+      </span>
+    </div>
+    <div>
+      <span class="icon-container">
+        <PhPopcorn :size="18" style="color: white;"/>
+        <router-link :to="Routes.SHOWS">Shows</router-link>
+      </span>
+    </div>
   </nav>
 </template>
 
@@ -26,5 +36,12 @@ nav a {
 
 nav a.router-link-active {
   text-decoration: underline;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
 }
 </style>

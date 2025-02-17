@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DefaultButton from '@/components/DefaultButton.vue';
 import TextChip from '@/components/TextChip.vue';
 import type { FilterOption } from '@/models/filter.model';
 
@@ -40,7 +41,9 @@ function clearFilters() {
           ▼
         </span>
       </div>
-      <button class="clear-filters-button" @click="clearFilters">Clear Filters</button>
+      <DefaultButton @button-click="clearFilters">
+        <template #text>Clear Filters</template>
+      </DefaultButton>
     </div>
 
     <div v-if="props.selectedFilterName" class="filter-chips">
@@ -96,19 +99,5 @@ function clearFilters() {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-}
-
-.clear-filters-button {
-  background-color: #3498db;
-  border: none;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  transition: background-color 0.2s;
-}
-
-.clear-filters-button:hover {
-  background-color: #2980b9;
 }
 </style>
