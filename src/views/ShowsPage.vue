@@ -70,6 +70,13 @@ function clearFilters() {
   showsStore.clearAllFilters();
 }
 
+async function clearSearchQuery() {
+  showsStore.clearSearchQuery();
+  areShowsLoading.value = true;
+  await showsStore.fetchAllShows();
+  areShowsLoading.value = false;
+}
+
 onMounted(async () => {
   if (showsStore.shows.length === 0) {
     areShowsLoading.value = true;
@@ -88,6 +95,7 @@ onMounted(async () => {
         @update:model-value="updateSearchQuery"
       />
       <button class="action-button" @click="searchShows">Search</button>
+      <button class="action-button" @click="clearSearchQuery">Clear</button>
     </header>
 
     <section class="filters-panel">
@@ -136,6 +144,7 @@ onMounted(async () => {
   border-radius: 4px;
   color: white;
   cursor: pointer;
+  margin-right: 0.5rem;
   padding: 0.5rem 1rem;
   transition: background-color 0.2s;
 }

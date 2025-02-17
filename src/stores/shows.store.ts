@@ -68,6 +68,9 @@ export const useShowsStore = defineStore('shows', {
     updateSearchQuery(query: string): void {
       this.searchQuery = query;
     },
+    clearSearchQuery(): void {
+      this.searchQuery = '';
+    },
     async searchShows(): Promise<void> {
       const shows = await api.getShowsBySearchQuery(this.searchQuery);
       
