@@ -100,6 +100,7 @@ export const useShowsStore = defineStore('shows', {
       } else {
         this.selectedFilterByGenre.push(genre);
       }
+      this.currentPage = 1;
     },
     clearSelectedFilterByGenre(): void {
       this.selectedFilterByGenre = [];
@@ -110,12 +111,14 @@ export const useShowsStore = defineStore('shows', {
       } else {
         this.selectedFilterByStatus.push(status);
       }
+      this.currentPage = 1;
     },
     clearSelectedFilterByStatus(): void {
       this.selectedFilterByStatus = [];
     },
     setSelectedFilterByRating(rating: RatingFilterOption): void {
       this.selectedFilterByRating = rating;
+      this.currentPage = 1;
     },
     clearSelectedFilterByRating(): void {
       this.selectedFilterByRating = '';
@@ -124,6 +127,7 @@ export const useShowsStore = defineStore('shows', {
       this.clearSelectedFilterByGenre();
       this.clearSelectedFilterByStatus();
       this.clearSelectedFilterByRating();
+      this.currentPage = 1;
     },
     setCurrentPage(page: number): void {
       this.currentPage = page;
