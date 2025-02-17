@@ -1,18 +1,20 @@
 # movie_app
 
-This template should help get you started developing with Vue 3 in Vite.
+This applicaiton is a small movie application which fetches, returns, and displays tv show data fromt he tvmaze api.
+Features include:
+- Search for a show by name
+- Filter shows by genre, status, and rating
+- Pagination of shows
+- View show details
 
-## Recommended IDE Setup
+## Prerequisites
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+This applicaiton was built with recent versions of Node.js and npm. Please ensure you have the following installed at minimum:
 
-## Type Support for `.vue` Imports in TS
+- Node.js >= 22.0.0
+- npm >= 10.0.0
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
+We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage your Node.js versions.
 
 ## Project Setup
 
