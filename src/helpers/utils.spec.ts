@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { filterByGenre, filterByStatus, filterByRating } from '@/helpers/util';
+import { filterByGenre, filterByStatus, filterByRating } from '@/helpers/utils';
 import { RatingFilterOption } from '@/models/filter.model';
 import type { ShowInfoCardData } from '@/modules/shows/models/shows.model';
 

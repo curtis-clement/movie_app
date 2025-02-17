@@ -2,14 +2,19 @@
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useShowsStore } from '@/modules/shows/stores/shows.store';
+import { useCastStore } from '@/modules/cast/stores/cast.store';
+import CastMemberOverview from '@/modules/cast/components/CastMemberOverview.vue';
 
 const route = useRoute();
+const castStore = useCastStore();
 const showsStore = useShowsStore();
 
-onMounted(() => {
+onMounted(async () => {
   if (!showsStore.selectedShow) {
-    showsStore.fetchShowById(Number(route.params.id));
+    console.log('FETCHING SHOW');
+    await showsStore.fetchShowById(Number(route.params.id));
   }
+  await castStore.fetchCastByShowId(Number(route.params.id));
 });
 </script>
 
@@ -43,7 +48,9 @@ onMounted(() => {
 
       <section class="cast-section card">
         <h2>Cast</h2>
-        <div>Cast information coming soon...</div>
+        <div v-for="castMember in castStore.selectedShowCast" :key="castMember.character.id">
+          <CastMemberOverview :castMember="castMember" />
+        </div>
       </section>
     </div>
   </div>

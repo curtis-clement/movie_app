@@ -6,7 +6,8 @@ import type { CastMember } from '@/modules/cast/models/cast.models';
 const castApi = {
   getCastByShowId: async (showId: number): Promise<CastMember[]> => {
     const path = new PathBuilder().addPath(Paths.shows).addPath(showId).addPath(Paths.cast);
-    return (await api.get(path.build())).data;
+    const response = await api.get(path.build());
+    return response.data;
   },
 }
 

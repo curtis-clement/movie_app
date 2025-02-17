@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import api from '@/core/api';
 import { type ShowInfoCardData, type Show } from '@/modules/shows/models/shows.model';
 import { RatingFilterOption } from '@/models/filter.model';
-import { filterByGenre, filterByStatus, filterByRating } from '@/helpers/util';
+import { filterByGenre, filterByStatus, filterByRating } from '@/helpers/utils';
 
 interface State {
   searchQuery: string;
