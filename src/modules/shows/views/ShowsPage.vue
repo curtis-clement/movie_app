@@ -105,28 +105,30 @@ onMounted(async () => {
 <template>
   <div class="shows-page">
     <div class="controls-container">
-      <section class="search-controls">
-        <SearchInput
-          placeholder="Search shows"
-          :model-value="showsStore.searchQuery"
-          @update:model-value="updateSearchQuery"
-        />
-        <DefaultButton @button-click="searchShows" :disabled="areButtonsDisabled">
-          <template #text>Search</template>
-        </DefaultButton>
-        <DefaultButton @button-click="clearSearchQuery" :disabled="areButtonsDisabled">
-          <template #text>Clear</template>
-        </DefaultButton>
-      </section>
+      <section class="top-controls">
+        <section class="search-controls">
+          <SearchInput
+            placeholder="Search shows"
+            :model-value="showsStore.searchQuery"
+            @update:model-value="updateSearchQuery"
+          />
+          <DefaultButton @button-click="searchShows" :disabled="areButtonsDisabled">
+            <template #text>Search</template>
+          </DefaultButton>
+          <DefaultButton @button-click="clearSearchQuery" :disabled="areButtonsDisabled">
+            <template #text>Clear</template>
+          </DefaultButton>
+        </section>
 
-      <section class="filters-panel">
-        <FilterPanel
-          :filters="filters"
-          :selected-filter-name="selectedFilterName"
-          @toggle-filter="toggleFilter"
-          @chip-click="handleChipClick"
-          @clear-filters="showsStore.clearAllFilters();"
-        />
+        <section class="filters-panel">
+          <FilterPanel
+            :filters="filters"
+            :selected-filter-name="selectedFilterName"
+            @toggle-filter="toggleFilter"
+            @chip-click="handleChipClick"
+            @clear-filters="showsStore.clearAllFilters();"
+          />
+        </section>
       </section>
     </div>
 
@@ -166,9 +168,16 @@ onMounted(async () => {
 
 .controls-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 1rem;
   margin-bottom: 2rem;
+}
+
+.top-controls {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .search-controls {
@@ -179,10 +188,7 @@ onMounted(async () => {
 }
 
 .filters-panel {
-  align-items: center;
-  display: flex;
   flex-grow: 1;
-  margin-top: 1rem;
 }
 
 .shows-grid {
