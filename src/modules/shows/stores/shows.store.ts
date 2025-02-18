@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import api from '@/core/api';
 import { type ShowInfoCardData, type Show } from '@/modules/shows/models/shows.model';
 import { RatingFilterOption } from '@/models/filter.model';
-import { filterByGenre, filterByStatus, filterByRating } from '@/helpers/utils';
+import { converShowDataForCardDisplay, filterByGenre, filterByStatus, filterByRating } from '@/helpers/utils';
 
 interface State {
   searchQuery: string;
@@ -48,15 +48,7 @@ export const useShowsStore = defineStore('shows', {
         try {
           const fetchedShows = await api.getShowsByPageNumber(apiPage);
           if (fetchedShows && fetchedShows.length > 0) {
-            const shows = fetchedShows.map((show: Show) => ({
-              genres: show.genres,
-              id: show.id,
-              image: show.image,
-              name: show.name,
-              rating: show.rating.average,
-              status: show.status,
-              network: show.network,
-            }));
+            const shows = fetchedShows.map((show: Show) => converShowDataForCardDisplay(show));
 
             shows.forEach((show: ShowInfoCardData) => {
               if (!this.shows.some(existing => existing.id === show.id)) {
@@ -96,17 +88,7 @@ export const useShowsStore = defineStore('shows', {
     },
     async searchShows(): Promise<void> {
       const shows = await api.getShowsBySearchQuery(this.searchQuery);
-      
-      const updatedShows = shows.map((item: { score: number, show: Show }) => ({
-        genres: item.show.genres ? item.show.genres : [],
-        id: item.show.id,
-        image: item.show.image,
-        name: item.show.name,
-        rating: item.show.rating && item.show.rating.average ? item.show.rating.average : 0,
-        status: item.show.status,
-        network: item.show.network,
-      }));
-
+      const updatedShows = shows.map((item: { score: number, show: Show }) => converShowDataForCardDisplay(item.show));
       this.shows = updatedShows;
       this.currentPage = 1;
     },

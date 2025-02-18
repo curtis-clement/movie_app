@@ -1,5 +1,5 @@
 import { RatingFilterOption } from '@/models/filter.model';
-import type { ShowInfoCardData } from '@/modules/shows/models/shows.model';
+import type { Show, ShowInfoCardData } from '@/modules/shows/models/shows.model';
 
 function filterByGenre(shows: ShowInfoCardData[], genres: string[]): ShowInfoCardData[] {
   if (genres.length === 0) {
@@ -28,4 +28,16 @@ function filterByRating(shows: ShowInfoCardData[], ratingOption: RatingFilterOpt
   });
 }
 
-export { filterByGenre, filterByStatus, filterByRating };
+function converShowDataForCardDisplay(show: Show): ShowInfoCardData {
+  return {
+    genres: show.genres,
+    id: show.id,
+    image: show.image,
+    name: show.name,
+    rating: show.rating && show.rating.average ? show.rating.average : 0,
+    status: show.status,
+    network: show.network,
+  };
+}
+
+export { converShowDataForCardDisplay, filterByGenre, filterByStatus, filterByRating };
