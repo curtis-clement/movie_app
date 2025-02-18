@@ -16,6 +16,12 @@ This applicaiton was built with recent versions of Node.js and npm. Please ensur
 
 We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage your Node.js versions.
 
+## Clone the repository
+
+```sh
+git clone https://github.com/yourusername/movie_app.git
+```
+
 ## Project Setup
 
 ```sh
