@@ -84,7 +84,8 @@ My goal was to showcase a bit of everything that I would put into a larger appli
 - Adding simple items like the “Image not available” placeholder or “N/A” if some fields for a show were returned as null
 
 # Future Considerations
-- I would have liked to have added an episode list to the UI in the specific Show Overview screen. Ideally there would be additional navigation to see the seasons of a show on a separate page as well since these are easily available through the UI.
+- Ideally for the episode list there would be navigation to a separate page to see a more detailed overviewof an episode and the seasons.
+- Adding a more detailed option to view a cast member and all their informaiton would be a good idea.
 - Ideally it would be good to extract some more logic into separate components - the loading spinner would be a good example of this.
 - Extracting CSS styles that are reused and placing them int he App.vue file would be a good idea so there is less repitition and a signle source of truth for styles that are used in multiple places.
 - I would want to write a reusable Card.vue component that could be used in multiple places and fed data probably using <slots> to allow for more flexibility and reuse -- specifically in the Overview page for a show.
