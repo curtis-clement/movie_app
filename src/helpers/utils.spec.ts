@@ -1,9 +1,37 @@
 import { describe, it, expect } from 'vitest';
-import { filterByGenre, filterByStatus, filterByRating } from '@/helpers/utils';
+import { converShowDataForCardDisplay, filterByGenre, filterByStatus, filterByRating } from '@/helpers/utils';
 import { RatingFilterOption } from '@/models/filter.model';
-import type { ShowInfoCardData } from '@/modules/shows/models/shows.model';
+import type { Show, ShowInfoCardData } from '@/modules/shows/models/shows.model';
 
-const mockShows: ShowInfoCardData[] = [
+const mockedSingleShow: Show = {
+  id: 1,
+  name: 'Show 1',
+  genres: ['Drama', 'Comedy'],
+  rating: { average: 8.5 },
+  status: 'Running',
+  image: { medium: '', original: '' },
+  language: 'English',
+  network: {
+    id: 1,
+    name: 'Network 1',
+    country: {
+      code: 'US',
+      name: 'United States',
+      timezone: 'America/New_York'
+    }
+  },
+  premiered: '2024-01-01',
+  runtime: 60,
+  schedule: {
+    days: ['Monday'],
+    time: '20:00'
+  },
+  ended: '2024-01-01',
+  summary: 'Summary 1',
+  url: 'https://example.com/show1'
+};
+
+const mockedShowsForCards: ShowInfoCardData[] = [
   {
     id: 1,
     name: 'Show 1',
@@ -59,67 +87,74 @@ const mockShows: ShowInfoCardData[] = [
 
 describe('filterByGenre', () => {
   it('returns all shows when no genres are provided', () => {
-    const result = filterByGenre(mockShows, []);
-    expect(result).toEqual(mockShows);
+    const result = filterByGenre(mockedShowsForCards, []);
+    expect(result).toEqual(mockedShowsForCards);
   });
 
   it('filters shows by a single genre', () => {
-    const result = filterByGenre(mockShows, ['Comedy']);
+    const result = filterByGenre(mockedShowsForCards, ['Comedy']);
     expect(result).toHaveLength(2);
     expect(result.map(show => show.id)).toEqual([1, 3]);
   });
 
   it('filters shows by multiple genres', () => {
-    const result = filterByGenre(mockShows, ['Action', 'Drama']);
+    const result = filterByGenre(mockedShowsForCards, ['Action', 'Drama']);
     expect(result).toHaveLength(2);
     expect(result.map(show => show.id)).toEqual([1, 2]);
   });
 
   it('returns empty array when no shows match the genres', () => {
-    const result = filterByGenre(mockShows, ['Horror']);
+    const result = filterByGenre(mockedShowsForCards, ['Horror']);
     expect(result).toHaveLength(0);
   });
 });
 
 describe('filterByStatus', () => {
   it('returns all shows when no statuses are provided', () => {
-    const result = filterByStatus(mockShows, []);
-    expect(result).toEqual(mockShows);
+    const result = filterByStatus(mockedShowsForCards, []);
+    expect(result).toEqual(mockedShowsForCards);
   });
 
   it('filters shows by a single status', () => {
-    const result = filterByStatus(mockShows, ['Running']);
+    const result = filterByStatus(mockedShowsForCards, ['Running']);
     expect(result).toHaveLength(2);
     expect(result.map(show => show.id)).toEqual([1, 3]);
   });
 
   it('filters shows by multiple statuses', () => {
-    const result = filterByStatus(mockShows, ['Running', 'Ended']);
+    const result = filterByStatus(mockedShowsForCards, ['Running', 'Ended']);
     expect(result).toHaveLength(3);
     expect(result.map(show => show.id)).toEqual([1, 2, 3]);
   });
 
   it('returns empty array when no shows match the status', () => {
-    const result = filterByStatus(mockShows, ['Cancelled']);
+    const result = filterByStatus(mockedShowsForCards, ['Cancelled']);
     expect(result).toHaveLength(0);
   });
 });
 
 describe('filterByRating', () => {
   it('returns original shows array when no rating option is provided', () => {
-    const result = filterByRating(mockShows, '');
-    expect(result).toEqual(mockShows);
+    const result = filterByRating(mockedShowsForCards, '');
+    expect(result).toEqual(mockedShowsForCards);
   });
 
   it('sorts shows by highest rating when HIGHEST option is selected', () => {
-    const result = filterByRating(mockShows, RatingFilterOption.HIGHEST);
+    const result = filterByRating(mockedShowsForCards, RatingFilterOption.HIGHEST);
     expect(result).toHaveLength(3);
     expect(result.map(show => show.rating)).toEqual([9.0, 8.5, 7.5]);
   });
 
   it('sorts shows by lowest rating when LOWEST option is selected', () => {
-    const result = filterByRating(mockShows, RatingFilterOption.LOWEST);
+    const result = filterByRating(mockedShowsForCards, RatingFilterOption.LOWEST);
     expect(result).toHaveLength(3);
     expect(result.map(show => show.rating)).toEqual([7.5, 8.5, 9.0]);
+  });
+
+  describe('converShowDataForCardDisplay', () => {
+    it('returns a ShowInfoCardData object with the correct properties', () => {
+      const result = converShowDataForCardDisplay(mockedSingleShow);
+      expect(result).toEqual(mockedShowsForCards[0]);
+    });
   });
 });
