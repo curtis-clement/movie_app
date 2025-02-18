@@ -53,6 +53,9 @@ This application is built with the Vue 3 framework and uses Typescript, Pinia an
 
 My goal was to showcase a bit of everything that I would put into a larger application, even if this meant that it took me a bit longer to build this application and resulted in a few less extra features. Some of the main areas I considered during building the application about are...
 
+## Branching
+- I did not use feature branches in this application, I just merged straight to main. I understand in many instances this is not the best practice and I would not generally use this approach in working with a team in an application. I would expect to have required code review etc. However to save time in this case I just merged straight to main.
+
 ## Typescript
 - I chose to use Typescript for this application simply because I feel that it is the right choice and allows for much more descriptive code that is easier to read and helps significantly in reducing bugs and debugging.
 
