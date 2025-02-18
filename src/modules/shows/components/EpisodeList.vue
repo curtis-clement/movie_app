@@ -25,11 +25,11 @@ const totalEpisodes = computed(() => props.episodes.length);
           </div>
         </div>
         <div class="episode-info">
-          <h3 class="episode-name">{{ episode.name }}</h3>
+          <h3 class="episode-name">{{ episode.name ? episode.name : 'N/A' }}</h3>
           <div class="episode-details">
-            <span>Season {{ episode.season }}</span>
+            <span>Season {{ episode.season ? episode.season : 'N/A' }}</span>
             <span class="separator">•</span>
-            <span>Episode {{ episode.number }}</span>
+            <span>Episode {{ episode.number ? episode.number : 'N/A' }}</span>
           </div>
         </div>
       </div>
