@@ -104,31 +104,31 @@ onMounted(async () => {
 
 <template>
   <div class="shows-page">
-    <header class="header">
-      <SearchInput
-        placeholder="Search shows"
-        :model-value="showsStore.searchQuery"
-        @update:model-value="updateSearchQuery"
-      />
-      <DefaultButton @button-click="searchShows" :disabled="areButtonsDisabled">
-        <template #text>Search</template>
-      </DefaultButton>
-      <DefaultButton @button-click="clearSearchQuery" :disabled="areButtonsDisabled">
-        <template #text>
-          Clear
-        </template>
-      </DefaultButton>
-    </header>
+    <div class="controls-container">
+      <section class="search-controls">
+        <SearchInput
+          placeholder="Search shows"
+          :model-value="showsStore.searchQuery"
+          @update:model-value="updateSearchQuery"
+        />
+        <DefaultButton @button-click="searchShows" :disabled="areButtonsDisabled">
+          <template #text>Search</template>
+        </DefaultButton>
+        <DefaultButton @button-click="clearSearchQuery" :disabled="areButtonsDisabled">
+          <template #text>Clear</template>
+        </DefaultButton>
+      </section>
 
-    <section class="filters-panel">
-      <FilterPanel
-        :filters="filters"
-        :selected-filter-name="selectedFilterName"
-        @toggle-filter="toggleFilter"
-        @chip-click="handleChipClick"
-        @clear-filters="showsStore.clearAllFilters();"
-      />
-    </section>
+      <section class="filters-panel">
+        <FilterPanel
+          :filters="filters"
+          :selected-filter-name="selectedFilterName"
+          @toggle-filter="toggleFilter"
+          @chip-click="handleChipClick"
+          @clear-filters="showsStore.clearAllFilters();"
+        />
+      </section>
+    </div>
 
     <PaginationControl
       :current-page="showsStore.currentPage"
@@ -159,13 +159,30 @@ onMounted(async () => {
 
 <style scoped>
 .shows-page {
-  max-width: 1400px;
   margin: 0 auto;
+  max-width: 1400px;
   padding: 1rem;
 }
 
-.header {
+.controls-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: 2rem;
+}
+
+.search-controls {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.5rem;
+}
+
+.filters-panel {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  margin-top: 1rem;
 }
 
 .shows-grid {
@@ -178,6 +195,15 @@ onMounted(async () => {
 @media (max-width: 768px) {
   .shows-page {
     padding: 0.75rem;
+  }
+  
+  .controls-container {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .search-controls {
+    margin-bottom: 1rem;
   }
   
   .shows-grid {
