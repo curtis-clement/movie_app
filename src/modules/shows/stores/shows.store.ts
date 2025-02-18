@@ -2,8 +2,8 @@ import { AxiosError } from 'axios';
 import { defineStore } from 'pinia';
 import api from '@/core/api';
 import { type ShowInfoCardData, type Show } from '@/modules/shows/models/shows.model';
-import { RatingFilterOption } from '@/models/filter.model';
-import { convertShowDataForCardDisplay, filterByGenre, filterByStatus, filterByRating } from '@/helpers/utils';
+import { RatingFilterOption } from '@/core/models/filter.model';
+import { convertShowDataForCardDisplay, filterByGenre, filterByStatus, filterByRating } from '@/core/helpers/utils';
 
 interface State {
   searchQuery: string;

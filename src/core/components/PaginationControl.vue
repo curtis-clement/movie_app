@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PaginationDirection } from '@/models/helpers.model';
+import { PaginationDirection } from '@/core/models/helpers.model';
 
 const props = defineProps<{
   currentPage: number;

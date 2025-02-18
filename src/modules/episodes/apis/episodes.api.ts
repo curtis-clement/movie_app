@@ -4,6 +4,10 @@ import { Paths } from '@/core/api/paths.api';
 import type { Episode } from '@/modules/episodes/models/episodes.model';
 
 const episodesApi = {
+  getShowEpisodes: async (showId: number): Promise<Episode[]> => {
+    const path = new PathBuilder().addPath(Paths.shows).addPath(showId).addPath(Paths.episodes);
+    return (await api.get(path.build())).data;
+  },
   getEpisodeListBySeasonId: async (seasonId: number): Promise<Episode[]> => {
     const path = new PathBuilder().addPath(Paths.seasons).addPath(seasonId).addPath(Paths.episodes);
     return (await api.get(path.build())).data;

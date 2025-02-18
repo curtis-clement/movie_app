@@ -86,7 +86,10 @@ My goal was to showcase a bit of everything that I would put into a larger appli
 # Future Considerations
 - I would have liked to have added an episode list to the UI in the specific Show Overview screen. Ideally there would be additional navigation to see the seasons of a show on a separate page as well since these are easily available through the UI.
 - Ideally it would be good to extract some more logic into separate components - the loading spinner would be a good example of this.
+- Extracting CSS styles that are reused and placing them int he App.vue file would be a good idea so there is less repitition and a signle source of truth for styles that are used in multiple places.
+- I would want to write a reusable Card.vue component that could be used in multiple places and fed data probably using <slots> to allow for more flexibility and reuse -- specifically in the Overview page for a show.
+- Adding a schedule section and information would be helpful.
 - I am “ok” with the way I set up the pagination to work in the product, however the fact that the API does not provide a filtered response for shows is not the most ideal. I think in a real world application (based on the API documentation) I would set up a Backend that fetches and stores the data of the shows and such in a database and then updates this information on a weekly basis. By doing this you could add specific query routes to for example query shows by genre, by network etc
-- I would add a snackbar system that would allow users to see completed requests or rejections / errors in the UI as a pop up
-- I would add additional filter considerations such as “Country” and “Network”
+- I would add a snackbar system that would allow users to see completed requests or rejections / errors in the UI as a pop up.
+- I would add additional filter considerations such as “Country” and “Network”.
 - In a much larger application (also dependent Backend) I would want to have a system in which a user could favourite click a show and they could then have a user specific page where they can see all of their favourited shows or favourited actors.

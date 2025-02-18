@@ -1,4 +1,4 @@
-import { RatingFilterOption } from '@/models/filter.model';
+import { RatingFilterOption } from '@/core/models/filter.model';
 import type { Show, ShowInfoCardData } from '@/modules/shows/models/shows.model';
 
 function filterByGenre(shows: ShowInfoCardData[], genres: string[]): ShowInfoCardData[] {

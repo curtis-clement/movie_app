@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Routes } from '@/models/routes.model';
+import { Routes } from '@/core/models/routes.model';
 import { PhHouse, PhPopcorn } from '@phosphor-icons/vue';
 </script>
 

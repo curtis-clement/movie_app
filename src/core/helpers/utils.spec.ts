@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { convertShowDataForCardDisplay, filterByGenre, filterByStatus, filterByRating } from '@/helpers/utils';
-import { RatingFilterOption } from '@/models/filter.model';
+import { convertShowDataForCardDisplay, filterByGenre, filterByStatus, filterByRating } from '@/core/helpers/utils';
+import { RatingFilterOption } from '@/core/models/filter.model';
 import type { Show, ShowInfoCardData } from '@/modules/shows/models/shows.model';
 
 const mockedSingleShow: Show = {

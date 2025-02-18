@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { Routes } from '@/models/routes.model';
+import { Routes } from '@/core/models/routes.model';
 import { useShowsStore } from '@/modules/shows/stores/shows.store';
 import DefaultButton from '@/core/components/DefaultButton.vue';
 import FilterPanel from '@/core/components/FilterPanel.vue';
 import PaginationControl from '@/core/components/PaginationControl.vue';
 import SearchInput from '@/core/components/SearchInput.vue';
 import ShowInfoCard from '@/modules/shows/components/ShowInfoCard.vue';
-import { FilterCategories, RatingFilterOption, ShowStatusFilterOption } from '@/models/filter.model';
+import { FilterCategories, RatingFilterOption, ShowStatusFilterOption } from '@/core/models/filter.model';
 
 const showsStore = useShowsStore();
 const router = useRouter();
