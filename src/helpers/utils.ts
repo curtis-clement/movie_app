@@ -28,7 +28,7 @@ function filterByRating(shows: ShowInfoCardData[], ratingOption: RatingFilterOpt
   });
 }
 
-function converShowDataForCardDisplay(show: Show): ShowInfoCardData {
+function convertShowDataForCardDisplay(show: Show): ShowInfoCardData {
   return {
     genres: show.genres,
     id: show.id,
@@ -40,4 +40,4 @@ function converShowDataForCardDisplay(show: Show): ShowInfoCardData {
   };
 }
 
-export { converShowDataForCardDisplay, filterByGenre, filterByStatus, filterByRating };
+export { convertShowDataForCardDisplay, filterByGenre, filterByStatus, filterByRating };
