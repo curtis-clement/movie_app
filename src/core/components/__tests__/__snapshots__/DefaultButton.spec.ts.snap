@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`DefaultButton > renders the component 1`] = `
-"<button data-v-598abd29="" class="default-button">
-  <div data-v-598abd29="" class="button-content"></div>
+"<button data-v-5f820906="" class="default-button">
+  <div data-v-5f820906="" class="button-content"></div>
 </button>"
 `;

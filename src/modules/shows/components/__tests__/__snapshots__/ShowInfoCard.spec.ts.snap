@@ -1,15 +1,15 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ShowInfoCard > renders the component 1`] = `
-"<div data-v-aaef1f9b="" class="show-info-card">
-  <div data-v-aaef1f9b="" class="image-container"><img data-v-aaef1f9b="" src="http://example.com/image.jpg" alt="Test Show" class="card-image"></div>
-  <div data-v-aaef1f9b="" class="show-info-card-content">
-    <h3 data-v-aaef1f9b="" class="show-title">Test Show</h3>
-    <div data-v-aaef1f9b="" class="show-detail"><b data-v-aaef1f9b="">Rating:</b> 8.5</div>
-    <div data-v-aaef1f9b="" class="show-detail"><b data-v-aaef1f9b="">Status:</b> Running</div>
-    <div data-v-aaef1f9b="" class="show-detail"><b data-v-aaef1f9b="">Network:</b> Test Network</div>
-    <div data-v-aaef1f9b="" class="show-detail"><b data-v-aaef1f9b="">Genres:</b> Drama / Comedy</div>
+"<div data-v-103bdb9e="" class="show-info-card">
+  <div data-v-103bdb9e="" class="image-container"><img data-v-103bdb9e="" src="http://example.com/image.jpg" alt="Test Show" class="card-image"></div>
+  <div data-v-103bdb9e="" class="show-info-card-content">
+    <h3 data-v-103bdb9e="" class="show-title">Test Show</h3>
+    <div data-v-103bdb9e="" class="show-detail"><b data-v-103bdb9e="">Rating:</b> 8.5</div>
+    <div data-v-103bdb9e="" class="show-detail"><b data-v-103bdb9e="">Status:</b> Running</div>
+    <div data-v-103bdb9e="" class="show-detail"><b data-v-103bdb9e="">Network:</b> Test Network</div>
+    <div data-v-103bdb9e="" class="show-detail"><b data-v-103bdb9e="">Genres:</b> Drama / Comedy</div>
   </div>
-  <div data-v-aaef1f9b="" class="action-banner">View show details</div>
+  <div data-v-103bdb9e="" class="action-banner">View show details</div>
 </div>"
 `;

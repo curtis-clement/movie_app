@@ -1,3 +1,3 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SearchInput > renders the component 1`] = `"<input data-v-54e32457="" type="text" placeholder="Search shows" value="">"`;
+exports[`SearchInput > renders the component 1`] = `"<input data-v-eb3440b3="" type="text" placeholder="Search shows" value="">"`;
